@@ -13,5 +13,4 @@ class MyApp(MDApp):
         self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
         return self.screen_menu
 
-
 MyApp().run()
