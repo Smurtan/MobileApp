@@ -1,7 +1,8 @@
 MDScreen:
     name: "reviews"
+
     MDFloatLayout:
-        md_bg_color: 1, 1, 1, 1
+        md_bg_color: 26, 24, 58, 255
         MDIconButton:
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
@@ -11,3 +12,14 @@ MDScreen:
             on_release:
                 root.manager.transition.direction = "right"
                 root.manager.current = "profile"
+        MDLabel:
+            text: "Мои отзывы"
+            font_size: "18"
+            pos_hint: {"center_x": .8,"center_y": .95}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+
+
+
+
+
