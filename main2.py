@@ -45,7 +45,6 @@ class Test(MDApp):
                     text_color_active="gray",
                 )
             )
-        )
-
+        )# revuwejdk
 
 Test().run()
