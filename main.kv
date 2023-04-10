@@ -1,9 +1,11 @@
 #:import MapSource kivy_garden.mapview.MapSource
+#from kivymd.uix.behaviors.magic_behavior import MagicBehavior
+#from kivymd.uix.button import MDRaisedButton
 MDScreen:
     name: "main"
     MDRelativeLayout:
         MapView:
-            map_source: MapSource(url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}")
+            map_source: MapSource(url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}")
             lat:50.6
             lon:3.05
             zoom:13
@@ -36,13 +38,50 @@ MDScreen:
                             text:"Antonio Benderas"
                             markup:True
                             halign:"center"
-        MDFloatingActionButton:
-            icon: "plus"
-            elevation_normal: 12
-            pos_hint: {"center_x": .5, "center_y": .1}
-        MDFloatingActionButton:
-            icon: "git"
-            elevation_normal: 12
-            pos_hint: {"center_x": .9, "center_y": .9}
-            on_release:
-                root.manager.current = 'profile'
+    MDRoundFlatButton
+        text: "Водитель"
+        size_hint: .3, .055
+        md_bg_color: "white"
+        pos_hint: {"center_x": .25, "center_y": .1}
+
+    MDRoundFlatButton
+        text: "Пассажир"
+        size_hint: .3, .055
+        md_bg_color: "white"
+        pos_hint: {"center_x": .75, "center_y": .1}
+
+
+
+
+
+    MDFloatingActionButton:
+        icon: "plus"
+        elevation_normal: 12
+        pos_hint: {"center_x": .5, "center_y": .1}
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = 'add_trip'
+
+
+    MDFloatingActionButton:
+        icon: "git"
+        elevation_normal: 12
+        pos_hint: {"center_x": .9, "center_y": .95}
+        size_hint: (None,None)
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = 'profile'
+        segment_panel_height: "56dp"
+
+    MDFloatingActionButton:
+        icon: "instagram"
+        elevation_normal: 12
+        pos_hint: {"center_x": .1, "center_y": .95}
+        size_hint: (None,None)
+
+    MDTextField:
+        hint_text: "Город"
+        mode: "round"
+        helper_text: "Введите город"
+        pos_hint: {"center_x": .5, "center_y": .95}
+        size_hint_x: .5
