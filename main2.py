@@ -1,50 +1,16 @@
 from kivymd.app import MDApp
-from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationItem
-from kivymd.uix.label import MDLabel
-from kivymd.uix.screen import MDScreen
+from kivy.lang import Builder
+from kivy_garden.mapview import MapView
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-class Test(MDApp):
+
+class MyApp(MDApp):
     def build(self):
-        self.theme_cls.material_style = "M3"
-        self.theme_cls.theme_style = "Dark"
-        return (
-            MDScreen(
-                MDBottomNavigation(
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='Mail',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='Home',
-                        icon='home',
-                        badge_icon="numeric-10",
-                    ),
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='Twitter',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='Twitter',
-                        icon='twitter',
-                        badge_icon="numeric-10",
-                    ),
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='LinkedIN',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='LinkedIN',
-                        icon='linkedin',
-                        badge_icon="numeric-10",
-                    ),
-                    selected_color_background="lightblue",
-                    text_color_active="gray",
-                )
-            )
-        )# revuwejdk
+        self.screen_menu = ScreenManager()
+        self.screen_menu.add_widget(Builder.load_file("main.kv"))
+        self.screen_menu.add_widget(Builder.load_file("Reviews.kv"))
+        self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
+        return self.screen_menu
 
-Test().run()
+MyApp().run()

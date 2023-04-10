@@ -1,0 +1,76 @@
+MDScreen:
+    name: "profile"
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "main"
+        Image:
+            source: "assets/logo.png"
+            pos_hint: {"center_x": .5,"center_y": .85}
+
+        MDLabel:
+            text: "Имя"
+            font_size: "48"
+            pos_hint: {"center_y": .7}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDLabel:
+            text: "Рейтинг: 3.5/5"
+            font_size: "18"
+            pos_hint: {"center_x": .7,"center_y": .6}
+            color: rgba(34, 34, 34, 255)
+        Image:
+            source: "assets/star.png"
+            pos_hint: {"center_x": .7,"center_y": .61}
+        Button:
+            text: "Мои отзывы"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .43}
+            background_color: 0, 0, 0, 0
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "reviews"
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 200, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+        Button:
+            text: "История поездок"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .30}
+            background_color: 0, 0, 0, 0
+            on_release:
+                root.screen.transition.direction = "left"
+                root.screen.current = "reviews"
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 200, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+        Button:
+            text: "Что-то"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .17}
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 200, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
