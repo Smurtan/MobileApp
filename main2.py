@@ -1,50 +1,15 @@
+from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationItem
-from kivymd.uix.label import MDLabel
-from kivymd.uix.screen import MDScreen
+from kivy.core.text import LabelBase
+from kivy.uix.screenmanager import ScreenManager
+from kivy_garden.mapview import MapView
+from kivy.core.window import Window
+Window.size = (310,580)
 
-
-class Test(MDApp):
+class MyApp(MDApp):
     def build(self):
-        self.theme_cls.material_style = "M3"
-        self.theme_cls.theme_style = "Dark"
-        return (
-            MDScreen(
-                MDBottomNavigation(
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='Mail',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='Home',
-                        icon='home',
-                        badge_icon="numeric-10",
-                    ),
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='Twitter',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='Twitter',
-                        icon='twitter',
-                        badge_icon="numeric-10",
-                    ),
-                    MDBottomNavigationItem(
-                        MDLabel(
-                            text='LinkedIN',
-                            halign='center',
-                        ),
-                        name='screen 1',
-                        text='LinkedIN',
-                        icon='linkedin',
-                        badge_icon="numeric-10",
-                    ),
-                    selected_color_background="lightblue",
-                    text_color_active="gray",
-                )
-            )
-        )# revuwejdk
+        self.screen = Builder.load_file("main.kv")
+        return self.screen
 
-Test().run()
+
+MyApp().run()
