@@ -1,0 +1,35 @@
+MDScreen:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "12dp"
+        adaptive_height: True
+        pos_hint: {"top": 1}
+
+        MDSmartTile:
+            id: smart_tile
+            source: "https://picsum.photos/id/70/3011/2000"
+            radius: 16
+            box_radius: [0, 0, 16, 16]
+            size_hint_y: None
+            height: "240dp"
+            on_release:
+                bottom_sheet.open() \
+                if bottom_sheet.state == "close" else \
+                bottom_sheet.dismiss()
+
+            MDLabel:
+                bold: True
+                color: 1, 1, 1, 1
+                text:
+                    "Tap to open the bottom sheet" \
+                    if bottom_sheet.state == "close" else \
+                    "Tap to close the bottom sheet"
+
+    MDBottomSheet:
+        id: bottom_sheet
+        type: "standard"
+        bg_color: "grey"
+        default_opening_height: smart_tile.y - dp(12)
+        size_hint_y: None
+        height: root.height - (smart_tile.height + dp(24))
