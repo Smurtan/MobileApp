@@ -1,0 +1,77 @@
+MDScreen:
+    name: "dan"
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(50, 0, 255, 255)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "setings"
+        MDLabel:
+            text: "Смена личных"
+            font_size: "18"
+            pos_hint: {"center_x": .8,"center_y": .965}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDLabel:
+            text: "данных"
+            font_size: "18"
+            pos_hint: {"center_x": .8,"center_y": .935}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        Button:
+            text: "Смена автарки"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .43}
+            background_color: 0, 0, 0, 0
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "dan"
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 255, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+        Image:
+            source: "assets/data.png"
+            pos_hint: {"center_x": .5,"center_y": .75}
+            size_hint: .5, .5
+        Button:
+            text: "Смена телефона"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .3}
+            background_color: 0, 0, 0, 0
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "password"
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 255, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+        Button:
+            text: "Смена имени"
+            font_size: "24sp"
+            size_hint: .90, .1
+            pos_hint: {"center_x": .5,"center_y": .17}
+            background_color: 0, 0, 0, 0
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "password"
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 255, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
