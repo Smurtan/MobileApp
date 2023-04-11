@@ -4,9 +4,6 @@ from kivy_garden.mapview import MapView
 from kivy.uix.screenmanager import ScreenManager
 KV = '''
 MDScreen:
-
-
-
     MDCard:
         MDLabel:
             size_hint: None,1

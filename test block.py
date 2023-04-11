@@ -1,53 +1,38 @@
-from kivy.lang.builder import Builder
+import os
+
+from kivy.lang import Builder
+
 from kivymd.app import MDApp
-from kivymd.uix.card import MDCard
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine
+from kivymd import images_path
 
 KV = '''
-<CardItem>
-    size_hint_y: None
-    height: "86dp"
-    padding: "4dp"
-    radius: 12
 
-    FitImage:
-        source: "avatar.jpg"
-        radius: root.radius
-        size_hint_x: None
-        width: root.height
-
-    MDBoxLayout:
-        orientation: "vertical"
+MDScrollView:
+    MDGridLayout:
+        id: box
+        cols: 1
         adaptive_height: True
-        spacing: "6dp"
-        padding: "12dp", 0, 0, 0
-        pos_hint: {"center_y": .5}
-
-        MDLabel:
-            text: "Title text"
-            font_style: "H5"
-            bold: True
-            adaptive_height: True
-
-        MDLabel:
-            text: "Subtitle text"
-            theme_text_color: "Hint"
-            adaptive_height: True
+        
 '''
 
 
-class CardItem(MDCard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.elevation = 3
 
-class Example(MDApp):
+
+class Test(MDApp):
     def build(self):
-        self.theme_cls.material_style = "M3"
         return Builder.load_string(KV)
 
     def on_start(self):
-        for x in range(10):
-            self.root.ids.content.add_widget(CardItem())
+        for i in range(10):
+            self.root.ids.box.add_widget(
+                    MDExpansionPanelThreeLine(
+                        text="Text",
+                        secondary_text="Secondary text",
+                        tertiary_text="Tertiary text",
+                    )
+                )
 
 
-Example().run()
+Test().run()
