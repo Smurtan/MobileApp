@@ -1,0 +1,112 @@
+MDScreen:
+    name: "signup"
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+
+    MDLabel:
+        text: "В первый раз здесь?"
+	    #font_name: "BPoppins"
+	    font_size: "26sp"
+	    pos_hint: {"center_x": .58, "center_y": .85}
+	    color: rgba(0, 0, 59, 255)
+	MDLabel:
+	    text: "Ну проходи"
+	    #font_name: "MPoppins"
+	    font_size: "18sp"
+	    pos_hint: {"center_x": .58, "center_y": .79}
+	    color: rgba(135, 133, 193, 255)
+
+    MDFloatLayout: #сдесь короче имя вводят
+	    size_hint: .7, .07
+	    pos_hint: {"center_x": .5, "center_y": .68}
+	    TextInput:
+	        hint_text: "Username"
+	        #font_name: "MPoppins"
+	        size_hint_y: .75
+	        pos_hint: {"center_x": .43, "center_y": .5}
+	        background_color: 1, 1, 1, 0
+	        foreground_color: rgba(0, 0, 59, 255)
+	        cursor_color: rgba(0, 0, 59, 255)
+	        font_size: "14sp"
+	        cursor_width: "2sp"
+	        multiline: False
+	    MDFloatLayout:
+	        pos_hint: {"center_x": .45, "center_y": .0}
+	        size_hint_y: .03
+	        md_bg_color: rgba(178, 178, 178, 255)
+
+	MDFloatLayout: #сдесь короче телефон вводят
+	    size_hint: .7, .07
+	    pos_hint: {"center_x": .5, "center_y": .56}
+	    TextInput:
+	        hint_text: "+7 (900) 000 00-00"
+	        #font_name: "MPoppins"
+	        size_hint_y: .75
+	        pos_hint: {"center_x": .43, "center_y": .5}
+	        background_color: 1, 1, 1, 0
+	        foreground_color: rgba(0, 0, 59, 255)
+	        cursor_color: rgba(0, 0, 59, 255)
+	        font_size: "14sp"
+	        cursor_width: "2sp"
+	        multiline: False
+	    MDFloatLayout:
+	        pos_hint: {"center_x": .45, "center_y": .0}
+	        size_hint_y: .03
+	        md_bg_color: rgba(178, 178, 178, 255)
+    MDFloatLayout: #а сдесь вводят пароль звездочками
+	    size_hint: .7, .07
+	    pos_hint: {"center_x": .5, "center_y": .44}
+	    TextInput:
+	        hint_text: "Password"
+	        #font_name: "MPoppins"
+	        size_hint_y: .75
+	        pos_hint: {"center_x": .43, "center_y": .5}
+	        background_color: 1, 1, 1, 0
+	        foreground_color: rgba(0, 0, 59, 255)
+	        cursor_color: rgba(0, 0, 59, 255)
+	        font_size: "14sp"
+	        cursor_width: "2sp"
+	        multiline: False
+	        password: True
+	    MDFloatLayout:
+	        pos_hint: {"center_x": .45, "center_y": .0}
+	        size_hint_y: .03
+	        md_bg_color: rgba(178, 178, 178, 255)
+
+    Button: #здесь присоединить с картой
+        text: "ДА ВПУСТИ УЖЕ"
+        size_hint: .66, .065
+        pos_hint: {"center_x": .5, "center_y": .34}
+        background_color: 0, 0, 0, 0
+        #font_name: "BPoppins"
+        canvas.before:
+            Color:
+                rgb: rgba(52, 0, 231, 255)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [5]
+    MDTextButton:
+        text: "Отчистить"
+        pos_hint: {"center_x": .5, "center_y": .28}
+        color: rgba(68, 78, 132, 255)
+        font_size: "12sp"
+        #font_name: "BPoppins"
+    MDLabel:
+        text: "У меня есть аккаунт"
+	    #font_name: "BPoppins"
+	    font_size: "11sp"
+	    pos_hint: {"center_x": .75, "center_y": .04}
+	    color: rgba(135, 133, 193, 255)
+	MDTextButton:
+        text: "Войти"
+	    #font_name: "BPoppins"
+	    font_size: "11sp"
+	    pos_hint: {"center_x": .64, "center_y": .04}
+	    color: rgba(52, 0, 231, 255)
