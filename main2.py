@@ -7,9 +7,10 @@ from kivy.uix.screenmanager import ScreenManager
 class MyApp(MDApp):
     def build(self):
         self.screen_menu = ScreenManager()
-        # self.screen_menu.add_widget(Builder.load_file("main.kv"),)
+        self.screen_menu.add_widget(Builder.load_file("main.kv"),)
         self.screen_menu.add_widget(Builder.load_file("Reviews.kv"))
-        # self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
+        self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
+        self.screen_menu.add_widget(Builder.load_file("add_trip.kv"))
         return self.screen_menu
 
 
