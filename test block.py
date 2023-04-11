@@ -1,53 +1,26 @@
-from kivy.lang.builder import Builder
 from kivymd.app import MDApp
-from kivymd.uix.card import MDCard
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
 
-KV = '''
-<CardItem>
-    size_hint_y: None
-    height: "86dp"
-    padding: "4dp"
-    radius: 12
-
-    FitImage:
-        source: "avatar.jpg"
-        radius: root.radius
-        size_hint_x: None
-        width: root.height
-
-    MDBoxLayout:
-        orientation: "vertical"
-        adaptive_height: True
-        spacing: "6dp"
-        padding: "12dp", 0, 0, 0
-        pos_hint: {"center_y": .5}
-
-        MDLabel:
-            text: "Title text"
-            font_style: "H5"
-            bold: True
-            adaptive_height: True
-
-        MDLabel:
-            text: "Subtitle text"
-            theme_text_color: "Hint"
-            adaptive_height: True
-'''
+class FirstWindow(Screen):
+    pass
 
 
-class CardItem(MDCard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.elevation = 3
+class SecondWindow(Screen):
+     pass
 
-class Example(MDApp):
+
+class WindowManager(ScreenManager):
+    pass
+
+
+kv = Builder.load_file('test.kv')
+
+
+class MyApp(MDApp):
     def build(self):
-        self.theme_cls.material_style = "M3"
-        return Builder.load_string(KV)
-
-    def on_start(self):
-        for x in range(10):
-            self.root.ids.content.add_widget(CardItem())
+        return kv
 
 
-Example().run()
+if __name__ == '__main__':
+    MyApp().run()

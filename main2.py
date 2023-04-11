@@ -1,16 +1,29 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_garden.mapview import MapView
-from kivy.uix.screenmanager import ScreenManager
+from kivymd.uix.button import MDRaisedButton
+
+
+class MainWindow(Screen):
+    pass
+
+
+# class ProfileWindow(Screen):
+#     pass
+
+
+class WindowManager(ScreenManager):
+    pass
+
+
+kv = Builder.load_file('main.kv')
 
 
 class MyApp(MDApp):
     def build(self):
-        self.screen_menu = ScreenManager()
-        # self.screen_menu.add_widget(Builder.load_file("main.kv"),)
-        self.screen_menu.add_widget(Builder.load_file("Reviews.kv"))
-        # self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
-        return self.screen_menu
+        return kv
 
 
-MyApp().run()
+if __name__ == '__main__':
+    MyApp().run()
