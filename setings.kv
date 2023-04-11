@@ -23,14 +23,14 @@ MDScreen:
             color: rgba(34, 34, 34, 255)
 
         Button:
-            text: "Смена имени"
+            text: "Сменя личных данных"
             font_size: "24sp"
             size_hint: .90, .1
-            pos_hint: {"center_x": .5,"center_y": .40}
+            pos_hint: {"center_x": .5,"center_y": .43}
             background_color: 0, 0, 0, 0
             on_release:
                 root.manager.transition.direction = "left"
-                root.manager.current = "reviews"
+                root.manager.current = "dan"
             canvas.before:
                 Color:
                     rgb: rgba(50, 0, 255, 255)
@@ -39,14 +39,14 @@ MDScreen:
                     pos: self.pos
                     radius: [5]
         Button:
-            text: "Сменя номера телефона"
+            text: "Сменя пороля"
             font_size: "24sp"
             size_hint: .90, .1
-            pos_hint: {"center_x": .5,"center_y": .27}
+            pos_hint: {"center_x": .5,"center_y": .3}
             background_color: 0, 0, 0, 0
             on_release:
-                root.screen.transition.direction = "left"
-                root.screen.current = "reviews"
+                root.manager.transition.direction = "left"
+                root.manager.current = "password"
             canvas.before:
                 Color:
                     rgb: rgba(50, 0, 255, 255)
@@ -55,17 +55,17 @@ MDScreen:
                     pos: self.pos
                     radius: [5]
         Button:
-            text: "Смена пороля"
+            text: "Выход"
             font_size: "24sp"
-            size_hint: .90, .1
-            pos_hint: {"center_x": .5,"center_y": .14}
+            size_hint: .3, .07
+            pos_hint: {"center_x": .5,"center_y": .17}
             background_color: 0, 0, 0, 0
             on_release:
                 root.manager.transition.direction = "left"
                 root.manager.current = "setings"
             canvas.before:
                 Color:
-                    rgb: rgba(50, 0, 255, 255)
+                    rgb: rgba(200, 0, 0, 0)
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
