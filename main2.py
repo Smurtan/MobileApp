@@ -14,6 +14,8 @@ class MyApp(MDApp):
         self.screen_menu.add_widget(Builder.load_file("Reviews.kv"))
         self.screen_menu.add_widget(Builder.load_file("ProfileScreen.kv"))
         return self.screen_menu
-
+    def clear(self):
+        self.root.ids.tel.text =""
+        self.root.ids.password.text = ""
 
 MyApp().run()
