@@ -133,16 +133,25 @@ class ProfileWindow(Screen):
         screen1.add_widget(Builder.load_file("ProfileScreen.kv"))
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
                                   theme_text_color="Custom", text_color=[50, 0, 255, 255])
-        my_button1.bind(on_press=self.changer1)
         my_button2 = Button(
             text="Мои отзывы",
             font_size="24sp",
             size_hint=[.90, .1],
             pos_hint={"center_x": .5, "center_y": .43},
             background_color=[0, 0, 0, 0], )
+        my_button4 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .17},
+                            background_color=[0, 0, 0, 0])
+        my_button3 = Button(font_size="24sp",size_hint= [.90, .1], pos_hint= {"center_x": .5,"center_y": .30},
+            background_color= [0, 0, 0, 0])
+
+        my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
+        my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
         screen1.add_widget(my_button1)
         screen1.add_widget(my_button2)
+        screen1.add_widget(my_button3)
+        screen1.add_widget(my_button4)
         self.add_widget(screen1)
 
     def changer1(self, *args):
@@ -150,6 +159,11 @@ class ProfileWindow(Screen):
 
     def changer2(self, *args):
         self.manager.current = 'Reviews'
+    def changer3(self,*args):
+        self.manager.current = 'HistoryTrip'
+
+    def changer4(self, *args):
+        self.manager.current = "Settings"
 
 
 class Reviews(Screen):
@@ -173,6 +187,172 @@ class Reviews(Screen):
         self.manager.current = 'ProfileWindow'
 
 
+class HistoryTrip(Screen):
+    def __init__(self, **kwargs):
+        super(HistoryTrip, self).__init__(**kwargs)
+        screen1 = Screen()
+        widget_grid_layout = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
+        for i in range(10):
+            widget_grid_layout.ids.box.add_widget(MDExpansionPanelThreeLine(
+                text="Text",
+                secondary_text="Secondary text",
+                tertiary_text="Tertiary text",
+            ))
+        screen1.add_widget(widget_grid_layout)
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer)
+        screen1.add_widget(my_button1)
+        self.add_widget(screen1)
+
+    def changer(self, *args):
+        self.manager.current = 'ProfileWindow'
+
+
+class Settings(Screen):
+    def __init__(self, **kwargs):
+        super(Settings, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("setings.kv"))
+        my_button1 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .43},
+                            background_color=[0, 0, 0, 0])
+        my_button2 = Button(font_size="24sp",
+                            size_hint=[.90, .1],
+                            pos_hint={"center_x": .5, "center_y": .3},
+                            background_color=[0, 0, 0, 0])
+        my_button3 = Button(font_size="24sp",
+                            size_hint=[.3, .07],
+                            pos_hint={"center_x": .5, "center_y": .17},
+                            background_color=[0, 0, 0, 0])
+        my_button4 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        screen1.add_widget(my_button3)
+        screen1.add_widget(my_button4)
+        self.add_widget(screen1)
+
+    def changer1(self, *args):
+        self.manager.current = 'DataChange'
+
+    def changer2(self, *args):
+        self.manager.current = 'PasswordChange'
+
+    def changer3(self, *args):
+        self.manager.current = 'MainWindow'
+
+    def changer4(self, *args):
+        self.manager.current = 'ProfileWindow'
+
+
+class DataChange(Screen):
+    def __init__(self, **kwargs):
+        super(DataChange, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("dan.kv"))
+        my_button1 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .43},
+                            background_color=[0, 0, 0, 0])
+        # my_button1.bind(on_press=self.changer1)
+        my_button2 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .3},
+                            background_color=[0, 0, 0, 0])
+        my_button3 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .17},
+                            background_color=[0, 0, 0, 0])
+        my_button4 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button2.bind(on_press=self.changer2)
+        my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        screen1.add_widget(my_button3)
+        screen1.add_widget(my_button4)
+        self.add_widget(screen1)
+
+    def changer1(self, *args):
+        self.manager.current = 'DataChange'
+
+    def changer2(self, *args):
+        self.manager.current = 'PhoneChange'
+
+    def changer3(self, *args):
+        self.manager.current = 'NameChange'
+
+    def changer4(self, *args):
+        self.manager.current = 'Settings'
+
+
+class PasswordChange(Screen):
+    def __init__(self, **kwargs):
+        super(PasswordChange, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("password.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
+                            pos_hint={"center_x": .5, "center_y": .05},
+                            background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        self.add_widget(screen1)
+
+    def changer1(self, *args):
+        self.manager.current = 'Settings'
+
+    def changer2(self, *args):
+        self.manager.current = 'Settings'
+
+
+class PhoneChange(Screen):
+    def __init__(self, **kwargs):
+        super(PhoneChange, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("phonenumber.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
+                            pos_hint={"center_x": .5, "center_y": .05},
+                            background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        self.add_widget(screen1)
+
+    def changer1(self, *args):
+        self.manager.current = 'DataChange'
+
+    def changer2(self, *args):
+        self.manager.current = 'DataChange'
+
+
+class NameChange(Screen):
+    def __init__(self, **kwargs):
+        super(NameChange, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("name.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
+                            pos_hint={"center_x": .5, "center_y": .05},
+                            background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        self.add_widget(screen1)
+
+    def changer1(self, *args):
+        self.manager.current = 'DataChange'
+
+    def changer2(self, *args):
+        self.manager.current = 'DataChange'
+
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
@@ -183,6 +363,12 @@ class MyApp(MDApp):
         screen5 = ProfileWindow(name='ProfileWindow')
         screen6 = Reviews(name='Reviews')
         screen7 = AddTrip(name='AddTrip')
+        screen9 = Settings(name='Settings')
+        screen10 = DataChange(name='DataChange')
+        screen11 = PasswordChange(name='PasswordChange')
+        screen12 = HistoryTrip(name='HistoryTrip')
+        screen13 = PhoneChange(name='PhoneChange')
+        screen14 = NameChange(name='NameChange')
 
         my_screenmanager.add_widget(screen1)
         my_screenmanager.add_widget(screen2)
@@ -191,6 +377,13 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen5)
         my_screenmanager.add_widget(screen6)
         my_screenmanager.add_widget(screen7)
+        my_screenmanager.add_widget(screen9)
+        my_screenmanager.add_widget(screen10)
+        my_screenmanager.add_widget(screen11)
+        my_screenmanager.add_widget(screen12)
+        my_screenmanager.add_widget(screen13)
+        my_screenmanager.add_widget(screen14)
+
         return my_screenmanager
 
 
