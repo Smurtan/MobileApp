@@ -4,8 +4,10 @@ MDScreen:
     height: "86dp"
     padding: "4dp"
     radius: 12
+
+main
     MDFloatLayout:
-        md_bg_color: 1, 1, 1, 1
+        md_bg_color: 26, 24, 58, 255
         MDIconButton:
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
@@ -16,22 +18,11 @@ MDScreen:
                 root.manager.transition.direction = "right"
                 root.manager.current = "profile"
 
-    MDBoxLayout:
-        orientation: "vertical"
-        adaptive_height: True
-        spacing: "6dp"
-        padding: "12dp", 0, 0, 0
-        pos_hint: {"center_x":.5, "center_y": .5}
-
         MDLabel:
-            text: "Title text"
-            font_style: "H5"
-            bold: True
-            adaptive_height: True
-            pos_hint: {"center_x":.5, "center_y": .5}
+            text: "Мои отзывы"
+            font_size: "18"
+            pos_hint: {"center_x": .8,"center_y": .95}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
 
-        MDLabel:
-            text: "Subtitle text"
-            theme_text_color: "Hint"
-            adaptive_height: True
-            pos_hint: {"center_x":.5, "center_y": .5}
+
