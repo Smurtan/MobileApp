@@ -1,8 +1,10 @@
 #:import MapSource kivy_garden.mapview.MapSource
-#from kivymd.uix.behaviors.magic_behavior import MagicBehavior
-#from kivymd.uix.button import MDRaisedButton
 MDScreen:
-    name: "main"
+    name: "add_trip"
+    MDBoxLayout:
+        orentation:"vertical"
+        MDTopAppBar:
+            md_bg_color: 1, 1, 1, 1
     MDRelativeLayout:
         MapView:
             map_source: MapSource(url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}")
@@ -25,6 +27,7 @@ MDScreen:
                             markup:True
                             halign:"center"
 
+
             MapMarkerPopup:
                 lat:50.61
                 lon:3.06
@@ -38,34 +41,13 @@ MDScreen:
                             text:"Antonio Benderas"
                             markup:True
                             halign:"center"
-    MDRoundFlatButton
-        text: "Водитель"
-        size_hint: .3, .055
-        md_bg_color: "white"
-        pos_hint: {"center_x": .25, "center_y": .1}
 
-    MDRoundFlatButton
-        text: "Пассажир"
-        size_hint: .3, .055
-        md_bg_color: "white"
-        pos_hint: {"center_x": .75, "center_y": .1}
-    #В чем прикол
-    MDFloatingActionButton:
-        icon: "git"
-        elevation_normal: 12
-        pos_hint: {"center_x": .9, "center_y": .95}
-        size_hint: (None,None)
-        segment_panel_height: "56dp"
-
-    MDFloatingActionButton:
-        icon: "instagram"
-        elevation_normal: 12
-        pos_hint: {"center_x": .1, "center_y": .95}
-        size_hint: (None,None)
 
     MDTextField:
         hint_text: "Город"
-        mode: "round"
         helper_text: "Введите город"
         pos_hint: {"center_x": .5, "center_y": .95}
         size_hint_x: .5
+
+
+
