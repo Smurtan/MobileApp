@@ -1,58 +1,87 @@
+#:import MapSource kivy_garden.mapview.MapSource
+#from kivymd.uix.behaviors.magic_behavior import MagicBehavior
+#from kivymd.uix.button import MDRaisedButton
 MDScreen:
-	name: "main"
-	MDFloatLayout:
-		md_bg_color: 1, 1, 1, 1
-		Image:
-			source: "assets/logo.png"
-			pos_hint: {"center_x": .10, "center_y": .95}
-	    Image:
-	        source: "assets/back.png"
-	        size_hint: .8, .8
-	        pos_hint: {"center_x": .5, "center_y": .65}
-	    MDLabel:
-	        text: "Hello there!"
-	        #font_name: "BPoppins"
-	        font_size: "23sp"
-	        pos_hint: {"center_y": .38}
-	        halign: "center"
-	        color: rgba(34, 34, 34, 255)
-	    MDLabel:
-	        text: "Зарегайся по-братски это недолго"
-	        #font_name: "MPoppins"
-	        font_size: "13sp"
-	        size_hint_x: .85
-	        pos_hint: {"center_x": .5, "center_y": .3}
-	        halign: "center"
-	        color: rgba(127, 127, 127, 255)
-	    Button: #Кнопка для входа
-	        text: "Я УЖЕ СМЕШЕРИК"
-	        size_hint: .66, .065
-	        pos_hint: {"center_x": .5, "center_y": .19}
-	        background_color: 0, 0, 0, 0
-	        #font_name: "BPoppins"
-	        on_release:
-	            root.manager.transition.direction = "left"
-	            root.manager.current = "login"
-	        canvas.before:
-                Color:
-                    rgb: rgba(52, 0, 231, 255)
-	            RoundedRectangle:
-	                size: self.size
-	                pos: self.pos
-	                radius: [5]
-	    Button: #Кнопка для регистрации
-	        text: "Я НОВЕНЬКИЙ"
-	        size_hint: .66, .065
-	        pos_hint: {"center_x": .5, "center_y": .09}
-	        background_color: 0, 0, 0, 0
-	        #font_name: "BPoppins"
-	        color: rgba(52, 0, 231, 255)
-	        on_release:
-	            root.manager.transition.direction = "left"
-	            root.manager.current = "signup"
-	        canvas.before:
-                Color:
-                    rgb: rgba(52, 0, 231, 255)
-	            Line:
-	                width: 1.2
-	                rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
+    name: "main"
+    MDRelativeLayout:
+        MapView:
+            map_source: MapSource(url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}")
+            lat:50.6
+            lon:3.05
+            zoom:13
+
+            # AND CREATE MARKER IN YOU MAPS
+            MapMarkerPopup:
+                lat:50.6
+                lon:3.05
+
+                # AND CREATE POPUP IN YOU MARKER
+                popup_size:dp(230),dp(130)
+                Bubble:
+                    MDBoxLayout:
+                        padding:"4dp"
+                        MDLabel:
+                            text:"Artem Osokin"
+                            markup:True
+                            halign:"center"
+
+            MapMarkerPopup:
+                lat:50.61
+                lon:3.06
+
+                # AND CREATE POPUP IN YOU MARKER
+                popup_size:dp(230),dp(130)
+                Bubble:
+                    MDBoxLayout:
+                        padding:"4dp"
+                        MDLabel:
+                            text:"Antonio Benderas"
+                            markup:True
+                            halign:"center"
+    MDRoundFlatButton
+        text: "Водитель"
+        size_hint: .3, .055
+        md_bg_color: "white"
+        pos_hint: {"center_x": .25, "center_y": .1}
+
+    MDRoundFlatButton
+        text: "Пассажир"
+        size_hint: .3, .055
+        md_bg_color: "white"
+        pos_hint: {"center_x": .75, "center_y": .1}
+
+
+
+
+
+    MDFloatingActionButton:
+        icon: "plus"
+        elevation_normal: 12
+        pos_hint: {"center_x": .5, "center_y": .1}
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = 'add_trip'
+
+
+    MDFloatingActionButton:
+        icon: "git"
+        elevation_normal: 12
+        pos_hint: {"center_x": .9, "center_y": .95}
+        size_hint: (None,None)
+        on_release:
+            root.manager.transition.direction = "left"
+            root.manager.current = 'profile'
+        segment_panel_height: "56dp"
+
+    MDFloatingActionButton:
+        icon: "instagram"
+        elevation_normal: 12
+        pos_hint: {"center_x": .1, "center_y": .95}
+        size_hint: (None,None)
+
+    MDTextField:
+        hint_text: "Город"
+        mode: "round"
+        helper_text: "Введите город"
+        pos_hint: {"center_x": .5, "center_y": .95}
+        size_hint_x: .5
