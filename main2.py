@@ -14,6 +14,8 @@ class MyApp(MDApp):
         self.screen_menu.add_widget(Builder.load_file("setings.kv"))
         self.screen_menu.add_widget(Builder.load_file("password.kv"))
         self.screen_menu.add_widget(Builder.load_file("dan.kv"))
+        self.screen_menu.add_widget(Builder.load_file("phonenumber.kv"))
+        self.screen_menu.add_widget(Builder.load_file("name.kv"))
         return self.screen_menu
 
 
