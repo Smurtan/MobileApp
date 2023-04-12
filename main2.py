@@ -9,6 +9,11 @@ from kivy.uix.button import Button
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
+import os
+from kivymd.uix.filemanager import MDFileManager
+from kivy.core.window import Window
+from kivymd.toast import toast
+from PIL import Image
 
 
 class Home(Screen):
@@ -211,6 +216,9 @@ class ProfileWindow(Screen):
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
         my_button4.bind(on_press=self.changer4)
+        my_button5.bind(on_press=self.file_manager_open)
+        self.manager_open = False
+        self.file_manager = MDFileManager(exit_manager=self.exit_manager, select_path=self.select_path)
         screen1.add_widget(my_button1)
         screen1.add_widget(my_button2)
         screen1.add_widget(my_button3)
@@ -229,6 +237,28 @@ class ProfileWindow(Screen):
 
     def changer4(self, *args):
         self.manager.current = "Settings"
+
+
+    def file_manager_open(self, *args):
+        self.file_manager.show(os.path.expanduser("~"))  # output manager to the screen
+        self.manager_open = True
+
+    def exit_manager(self, *args):
+        self.manager_open = False
+        self.file_manager.close()
+
+    def select_path(self, path: str):
+        self.exit_manager()
+        toast(path)
+        print(path)
+        # im1 = Image.open(path)
+        # im1 = im1.save(r"C:\Users\Пользователь\PycharmProjects\MobileApp\sereza\myphoto.png")
+
+    def events(self, instance, keyboard, keycode, text, modifiers):
+        if keyboard in (1001, 27):
+            if self.manager_open:
+                self.file_manager.back()
+        return True
 
 
 class Reviews(Screen):
@@ -372,28 +402,6 @@ class PasswordChange(Screen):
         self.manager.current = 'Settings'
 
 
-class PhoneChange(Screen):
-    def __init__(self, **kwargs):
-        super(PhoneChange, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("phonenumber.kv"))
-        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
-                                  text_color=[0, 0, 0, 0])
-        my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
-                            pos_hint={"center_x": .5, "center_y": .05},
-                            background_color=[0, 0, 0, 0])
-        my_button1.bind(on_press=self.changer1)
-        my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
-
-    def changer1(self, *args):
-        self.manager.current = 'DataChange'
-
-    def changer2(self, *args):
-        self.manager.current = 'DataChange'
-
 
 class NameChange(Screen):
     def __init__(self, **kwargs):
@@ -418,40 +426,52 @@ class NameChange(Screen):
         self.manager.current = 'DataChange'
 
 
+# class PhotoChange(Screen):
+#     def __init__(self, **kwargs):
+#         super(PhotoChange, self).__init__(**kwargs)
+#         screen1 = Screen()
+#         screen1.add_widget(Builder.load_file("photo.kv"))
+#         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+#                                   text_color=[0, 0, 0, 0])
+#         my_button1.bind(on_press=self.changer1)
+#         self.add_widget(screen1)
+#     def changer1(self, *args):
+#         self.manager.current = 'DataChange'
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
-        screen1 = Home(name='Home')
-        screen2 = Login(name='Login')
-        screen3 = SignUp(name='SignUp')
-        screen4 = MainWindow(name='MainWindow')
+        # screen1 = Home(name='Home')
+        # screen2 = Login(name='Login')
+        # screen3 = SignUp(name='SignUp')
+        # screen4 = MainWindow(name='MainWindow')
         screen5 = ProfileWindow(name='ProfileWindow')
-        screen6 = Reviews(name='Reviews')
-        screen7 = TripFrom(name='TripFrom')
-        screen8 = TripTo(name='TripTo')
-        screen9 = Settings(name='Settings')
+        # screen6 = Reviews(name='Reviews')
+        # screen7 = TripFrom(name='TripFrom')
+        # screen8 = TripTo(name='TripTo')
+        # screen9 = Settings(name='Settings')
         screen10 = DataChange(name='DataChange')
-        screen11 = PasswordChange(name='PasswordChange')
-        screen12 = HistoryTrip(name='HistoryTrip')
-        screen13 = PhoneChange(name='PhoneChange')
-        screen14 = NameChange(name='NameChange')
-        screen15 = InputTripInformation(name='InputTripInformation')
+        # screen11 = PasswordChange(name='PasswordChange')
+        # screen12 = HistoryTrip(name='HistoryTrip')
+        # screen13 = PhoneChange(name='PhoneChange')
+        # screen14 = NameChange(name='NameChange')
+        # screen15 = InputTripInformation(name='InputTripInformation')
 
-        my_screenmanager.add_widget(screen1)
-        my_screenmanager.add_widget(screen2)
-        my_screenmanager.add_widget(screen3)
-        my_screenmanager.add_widget(screen4)
+        # my_screenmanager.add_widget(screen1)
+        # my_screenmanager.add_widget(screen2)
+        # my_screenmanager.add_widget(screen3)
+        # my_screenmanager.add_widget(screen4)
         my_screenmanager.add_widget(screen5)
-        my_screenmanager.add_widget(screen6)
-        my_screenmanager.add_widget(screen7)
-        my_screenmanager.add_widget(screen8)
-        my_screenmanager.add_widget(screen9)
+        # my_screenmanager.add_widget(screen6)
+        # my_screenmanager.add_widget(screen7)
+        # my_screenmanager.add_widget(screen8)
+        # my_screenmanager.add_widget(screen9)
         my_screenmanager.add_widget(screen10)
-        my_screenmanager.add_widget(screen11)
-        my_screenmanager.add_widget(screen12)
-        my_screenmanager.add_widget(screen13)
-        my_screenmanager.add_widget(screen14)
-        my_screenmanager.add_widget(screen15)
+        # my_screenmanager.add_widget(screen11)
+        # my_screenmanager.add_widget(screen12)
+        # my_screenmanager.add_widget(screen13)
+        # my_screenmanager.add_widget(screen14)
+        # my_screenmanager.add_widget(screen15)
 
         return my_screenmanager
 
