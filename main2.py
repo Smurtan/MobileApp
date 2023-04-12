@@ -12,6 +12,7 @@ from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
 import requests
+from kivymd.uix.card import MDCard
 
 
 class Coordinaty:
@@ -135,13 +136,17 @@ class MainWindow(Screen):
             icon="car-search", elevation_normal=0,
             pos_hint={"center_x": .1, "center_y": .95},
             size_hint=(None, None))
+        my_button4 = MDFloatingActionButton(icon="alarm-check", elevation_normal=12,
+                                            pos_hint={"center_x": .9, "center_y": .80},
+                                            size_hint=(None, None), segment_panel_height="56dp", md_bg_color="green")
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
-
+        my_button4.bind(on_press=self.changer4)
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
+        self.screen1.add_widget(my_button4)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -155,6 +160,22 @@ class MainWindow(Screen):
     def changer3(self, *args):
         self.manager.transition.direction = "right"
         self.manager.current = 'Burger'
+
+    def changer4(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'ActiveTrip'
+
+
+class ActiveTrip(Screen):
+    def __init__(self, **kwargs):
+        super(ActiveTrip, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        card = MDCard(MDLabel(text="Водитель", size_hint_y=.8,font_size="22sp"), id="card1",
+                      size_hint=[1, .9], focus_behavior=False,
+                      pos_hint={"center_x": .5, "center_y": .95}, elevation=3)
+
+        self.screen1.add_widget(card)
+        self.add_widget(self.screen1)
 
 
 class TripFrom(Screen):
@@ -638,6 +659,8 @@ class MyApp(MDApp):
         screen16 = StrangeProfile(name='StrangeProfile')
         screen17 = Burger(name='Burger')
         screen18 = Travel(name='Travel')
+        screen19 = ActiveTrip(name='ActiveTrip')
+
         my_screenmanager.add_widget(screen1)
         my_screenmanager.add_widget(screen2)
         my_screenmanager.add_widget(screen3)
@@ -656,6 +679,7 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
         my_screenmanager.add_widget(screen18)
+        my_screenmanager.add_widget(screen19)
         return my_screenmanager
 
 
