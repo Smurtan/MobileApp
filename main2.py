@@ -11,6 +11,22 @@ import os
 from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
+import requests
+
+
+class Coordinaty:
+    def __init__(self, city):
+        self.city = city
+
+    def get_coordinates(self):
+        get_url = 'http://api.opencagedata.com/geocode/v1/json?q={}&key=5ab8e108b0dc43a985c263009996f26e'.format(
+            self.city)
+        response = requests.get(get_url).json()
+
+        self.latitude = response['results'][0]['geometry']['lat']
+        self.longitude = response['results'][0]['geometry']['lng']
+        return self.latitude, self.longitude
+
 
 class Home(Screen):
     def __init__(self, **kwargs):
@@ -164,6 +180,9 @@ class TripFrom(Screen):
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
+        print(self.screen1.ids.city.text)
+        from_coordinates = Coordinaty(self.screen1.ids.city.text)
+        print(from_coordinates.get_coordinates())
         self.manager.current = 'TripTo'
 
 
@@ -191,6 +210,9 @@ class TripTo(Screen):
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
+        print(self.screen1.ids.city.text)
+        to_coordinates = Coordinaty(self.screen1.ids.city.text)
+        print(to_coordinates.get_coordinates())
         self.manager.current = 'InputTripInformation'
 
 
@@ -554,7 +576,12 @@ class Burger(Screen):
 
     def changer2(self, *args):
         print(self.screen1.ids.from_.text, self.screen1.ids.to_.text, self.screen1.ids.date.text)
+        from_coordinates = Coordinaty(self.screen1.ids.from_.text)
+        print(from_coordinates.get_coordinates())
+        to_coordinates = Coordinaty(self.screen1.ids.to_.text)
+        print(to_coordinates.get_coordinates())
         self.manager.current = 'Travel'
+
 
 class Travel(Screen):
     def __init__(self, **kwargs):
@@ -576,6 +603,8 @@ class Travel(Screen):
 
     def changer(self, *args):
         self.manager.current = 'Burger'
+
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
