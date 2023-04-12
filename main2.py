@@ -595,6 +595,7 @@ class Travel(Screen):
 # client = Client('192.168.0.84', 8080)
 # client.connect()
 
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
