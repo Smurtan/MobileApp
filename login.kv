@@ -46,7 +46,7 @@ MDScreen:
 	    pos_hint: {"center_x": .5, "center_y": .5}
 	    TextInput:
 	        id: password
-	        hint_text: "Password"
+	        hint_text: "Пароль"
 	        #font_name: "MPoppins"
 	        size_hint_y: .75
 	        pos_hint: {"center_x": .5, "center_y": .5}
@@ -63,7 +63,7 @@ MDScreen:
 	        md_bg_color: rgba(178, 178, 178, 255)
 
 	Button: #здесь присоединить с картой
-	    text: "ДА ВПУСТИ УЖЕ"
+	    text: "ВОЙТИ"
 	    size_hint: .66, .065
 	    pos_hint: {"center_x": .5, "center_y": .34}
 	    background_color: 0, 0, 0, 0
@@ -76,18 +76,13 @@ MDScreen:
                 pos: self.pos
                 radius: [5]
 
-    MDTextButton:
-        text: "Отчистить"
-        pos_hint: {"center_x": .5, "center_y": .28}
-        color: rgba(68, 78, 132, 255)
-        font_size: "12sp"
-        #font_name: "BPoppins"
+
 
     MDLabel:
         text: "У меня нет аккаунта"
 	    #font_name: "BPoppins"
 	    font_size: "11sp"
-	    pos_hint: {"center_x": .67, "center_y": .04}
+	    pos_hint: {"center_x": .60, "center_y": .04}
 	    color: rgba(135, 133, 193, 255)
 	MDTextButton:
         text: "Зарегистрироваться"
