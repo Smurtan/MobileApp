@@ -516,6 +516,9 @@ class StrangeProfile(Screen):
     def __init__(self, **kwargs):
         super(StrangeProfile, self).__init__(**kwargs)
         screen1 = Screen()
+        my_button1 = MDIconButton(icon="plus", pos_hint={"center_y": .8},
+                                  text_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
         name_profile = MDLabel(text="Имя", font_size="48", pos_hint={"center_y": .7},
                                halign="center",
                                color=[34, 34, 34, 255])
@@ -540,9 +543,35 @@ class StrangeProfile(Screen):
             ))
         scroll.ids.box.add_widget(scroll_reviews)
         screen1.add_widget(scroll)
-
+        screen1.add_widget(my_button1)
         self.add_widget(screen1)
 
+    def changer1(self, *args):
+        self.manager.current = 'comment'
+
+
+class Coment(Screen):
+    def __init__(self, **kwargs):
+        super(Coment, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("comment.kv"))
+        self.screen1 = Builder.load_file("comment.kv")
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer1)
+        my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                            background_color=[0, 0, 0, 0])
+        my_button2.bind(on_press=self.changer2)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'StrangeProfile'
+    def changer2(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'StrangeProfile'
+        print(self.screen1.ids.com.text)
 
 class Burger(Screen):
 
@@ -598,42 +627,44 @@ class Travel(Screen):
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
-        screen1 = Home(name='Home')
-        screen2 = Login(name='Login')
-        screen3 = SignUp(name='SignUp')
-        screen4 = MainWindow(name='MainWindow')
-        screen5 = ProfileWindow(name='ProfileWindow')
-        screen6 = Reviews(name='Reviews')
-        screen7 = TripFrom(name='TripFrom')
-        screen8 = TripTo(name='TripTo')
-        screen9 = Settings(name='Settings')
-        screen10 = DataChange(name='DataChange')
-        screen11 = PasswordChange(name='PasswordChange')
-        screen12 = HistoryTrip(name='HistoryTrip')
-        screen13 = PhoneChange(name='PhoneChange')
-        screen14 = NameChange(name='NameChange')
-        screen15 = InputTripInformation(name='InputTripInformation')
+        # screen1 = Home(name='Home')
+        # screen2 = Login(name='Login')
+        # screen3 = SignUp(name='SignUp')
+        # screen4 = MainWindow(name='MainWindow')
+        # screen5 = ProfileWindow(name='ProfileWindow')
+        # screen6 = Reviews(name='Reviews')
+        # screen7 = TripFrom(name='TripFrom')
+        # screen8 = TripTo(name='TripTo')
+        # screen9 = Settings(name='Settings')
+        # screen10 = DataChange(name='DataChange')
+        # screen11 = PasswordChange(name='PasswordChange')
+        # screen12 = HistoryTrip(name='HistoryTrip')
+        # screen13 = PhoneChange(name='PhoneChange')
+        # screen14 = NameChange(name='NameChange')
+        # screen15 = InputTripInformation(name='InputTripInformation')
         screen16 = StrangeProfile(name='StrangeProfile')
         screen17 = Burger(name='Burger')
         screen18 = Travel(name='Travel')
-        my_screenmanager.add_widget(screen1)
-        my_screenmanager.add_widget(screen2)
-        my_screenmanager.add_widget(screen3)
-        my_screenmanager.add_widget(screen4)
-        my_screenmanager.add_widget(screen5)
-        my_screenmanager.add_widget(screen6)
-        my_screenmanager.add_widget(screen7)
-        my_screenmanager.add_widget(screen8)
-        my_screenmanager.add_widget(screen9)
-        my_screenmanager.add_widget(screen10)
-        my_screenmanager.add_widget(screen11)
-        my_screenmanager.add_widget(screen12)
-        my_screenmanager.add_widget(screen13)
-        my_screenmanager.add_widget(screen14)
-        my_screenmanager.add_widget(screen15)
+        screen19 = Coment(name='comment')
+        # my_screenmanager.add_widget(screen1)
+        # my_screenmanager.add_widget(screen2)
+        # my_screenmanager.add_widget(screen3)
+        # my_screenmanager.add_widget(screen4)
+        # my_screenmanager.add_widget(screen5)
+        # my_screenmanager.add_widget(screen6)
+        # my_screenmanager.add_widget(screen7)
+        # my_screenmanager.add_widget(screen8)
+        # my_screenmanager.add_widget(screen9)
+        # my_screenmanager.add_widget(screen10)
+        # my_screenmanager.add_widget(screen11)
+        # my_screenmanager.add_widget(screen12)
+        # my_screenmanager.add_widget(screen13)
+        # my_screenmanager.add_widget(screen14)
+        # my_screenmanager.add_widget(screen15)
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
         my_screenmanager.add_widget(screen18)
+        my_screenmanager.add_widget(screen19)
         return my_screenmanager
 
 
