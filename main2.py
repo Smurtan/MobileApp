@@ -494,28 +494,31 @@ class StrangeProfile(Screen):
             ))
         scroll.ids.box.add_widget(scroll_reviews)
         screen1.add_widget(scroll)
+
         self.add_widget(screen1)
 
 
 class Burger(Screen):
+
     def __init__(self, **kwargs):
         super(Burger, self).__init__(**kwargs)
-        self.screen1 = Screen()
-        self.scroll = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box",
-                                                                      cols=1,
-                                                                      adaptive_height=True,
-                                                                      spacing="10dp",
-                                                                      padding="20dp"))
-        from_ = MDTextField(hint_text="Откуда", mode="round", size_hint_x=.7)
-        to_ = MDTextField(hint_text="Куда", mode="round", size_hint_x=.7)
-        date_ = MDTextField(hint_text="дд/мм/гггг", helper_text="Введите дату поездки", size_hint_x=.7,
-                            date_format="dd/mm/yyyy")
-        self.scroll.ids.box.add_widget(from_)
-        self.scroll.ids.box.add_widget(to_)
-        self.scroll.ids.box.add_widget(date_)
-        self.screen1.add_widget(self.scroll)
-        self.add_widget(self.screen1)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("burger.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
+                                  text_color=[0, 0, 0, 0])
+        my_button2 = Button(font_size="24sp", size_hint=[.2, .05],
+                            pos_hint={"center_x": .5, "center_y": .05},
+                            background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        self.add_widget(screen1)
 
+    def changer1(self, *args):
+        self.manager.current = 'MainWindow'
+    def changer2(self, *args):
+        self.manager.current = 'Travel'
 
 class MyApp(MDApp):
     def build(self):
