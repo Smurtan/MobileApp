@@ -1,0 +1,46 @@
+MDScreen:
+    name: "inf_trip"
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+        Button:
+            text: "Ок"
+            font_size: "20sp"
+            size_hint: .3, .05
+            pos_hint: {"center_x": .8,"center_y": .1}
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 255, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: "20dp"
+        adaptive_height: True
+        size_hint_x: .8
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+        MDTextField:
+            hint_text: "дд/мм/гггг"
+            helper_text: "Введите дату поездки"
+            validator: "date"
+            date_format: "dd/mm/yyyy"
+            date_interval: "01/01/2023", "01/01/2030"
+
+        MDTextField:
+            hint_text: "чч:мм"
+            helper_text: "Введите время поездки"
+            validator: "time"
+            time_format: "hh:mm"
+
+        MDTextField:
+            hint_text: "Введите кол-во пассажиров"
+            #max_text_length: 5 #сдесь можно сделать черз переменную свободных мест

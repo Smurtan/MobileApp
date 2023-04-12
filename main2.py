@@ -7,6 +7,8 @@ from kivymd.uix import scrollview
 from kivymd.uix import gridlayout
 from kivy.uix.button import Button
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.label import MDLabel
+from kivymd.uix.textfield import MDTextField
 
 
 class Home(Screen):
@@ -106,23 +108,83 @@ class MainWindow(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        i = 2
+        print(i)
         self.manager.current = 'ProfileWindow'
 
     def changer2(self, *args):
-        self.manager.current = 'AddTrip'
+        i = 1
+        print(i)
+        self.manager.current = 'TripFrom'
 
 
-class AddTrip(Screen):
+class TripFrom(Screen):
     def __init__(self, **kwargs):
-        super(AddTrip, self).__init__(**kwargs)
+        super(TripFrom, self).__init__(**kwargs)
         screen1 = Screen()
         screen1.add_widget(Builder.load_file("add_trip.kv"))
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
-        my_button1.bind(on_press=self.changer)
+        self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                                 background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
         screen1.add_widget(my_button1)
+        screen1.add_widget(self.my_button2)
+        self.a = MDLabel(text="Где собираемся?", font_size="20", pos_hint={"center_y": .97}, halign="center",
+                         color=[34, 34, 34, 255])
+        screen1.add_widget(self.a)
+        self.add_widget(screen1)
+        self.screen = screen1
+        self.my_button2.bind(on_press=self.changer2)
+
+    def changer1(self, *args):
+        self.manager.current = 'MainWindow'
+
+    def changer2(self, *args):
+        self.manager.current = 'TripTo'
+
+
+class TripTo(Screen):
+    def __init__(self, **kwargs):
+        super(TripTo, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("add_trip.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                                 background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(self.my_button2)
+        self.a = MDLabel(text="Куда едем?", font_size="20", pos_hint={"center_y": .97}, halign="center",
+                         color=[34, 34, 34, 255])
+        screen1.add_widget(self.a)
+        self.add_widget(screen1)
+        self.my_button2.bind(on_press=self.changer2)
+
+    def changer1(self, *args):
+        self.manager.current = 'TripFrom'
+
+    def changer2(self, *args):
+        self.manager.current = 'InputTripInformation'
+
+
+class InputTripInformation(Screen):
+    def __init__(self, **kwargs):
+        super(InputTripInformation, self).__init__(**kwargs)
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("inf_trip.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer1)
+        my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                            background_color=[0, 0, 0, 0])
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
         self.add_widget(screen1)
 
-    def changer(self, *args):
+    def changer1(self, *args):
+        self.manager.current = 'TripTo'
+
+    def changer2(self, *args):
         self.manager.current = 'MainWindow'
 
 
@@ -141,9 +203,10 @@ class ProfileWindow(Screen):
             background_color=[0, 0, 0, 0], )
         my_button4 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .17},
                             background_color=[0, 0, 0, 0])
-        my_button3 = Button(font_size="24sp",size_hint= [.90, .1], pos_hint= {"center_x": .5,"center_y": .30},
-            background_color= [0, 0, 0, 0])
-
+        my_button3 = Button(font_size="24sp", size_hint=[.90, .1], pos_hint={"center_x": .5, "center_y": .30},
+                            background_color=[0, 0, 0, 0])
+        my_button5 = Button(font_size="24sp", size_hint=[.12, .15], pos_hint={"center_x": .5, "center_y": .85},
+                            background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
@@ -152,6 +215,7 @@ class ProfileWindow(Screen):
         screen1.add_widget(my_button2)
         screen1.add_widget(my_button3)
         screen1.add_widget(my_button4)
+        screen1.add_widget(my_button5)
         self.add_widget(screen1)
 
     def changer1(self, *args):
@@ -159,7 +223,8 @@ class ProfileWindow(Screen):
 
     def changer2(self, *args):
         self.manager.current = 'Reviews'
-    def changer3(self,*args):
+
+    def changer3(self, *args):
         self.manager.current = 'HistoryTrip'
 
     def changer4(self, *args):
@@ -362,13 +427,15 @@ class MyApp(MDApp):
         screen4 = MainWindow(name='MainWindow')
         screen5 = ProfileWindow(name='ProfileWindow')
         screen6 = Reviews(name='Reviews')
-        screen7 = AddTrip(name='AddTrip')
+        screen7 = TripFrom(name='TripFrom')
+        screen8 = TripTo(name='TripTo')
         screen9 = Settings(name='Settings')
         screen10 = DataChange(name='DataChange')
         screen11 = PasswordChange(name='PasswordChange')
         screen12 = HistoryTrip(name='HistoryTrip')
         screen13 = PhoneChange(name='PhoneChange')
         screen14 = NameChange(name='NameChange')
+        screen15 = InputTripInformation(name='InputTripInformation')
 
         my_screenmanager.add_widget(screen1)
         my_screenmanager.add_widget(screen2)
@@ -377,12 +444,14 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen5)
         my_screenmanager.add_widget(screen6)
         my_screenmanager.add_widget(screen7)
+        my_screenmanager.add_widget(screen8)
         my_screenmanager.add_widget(screen9)
         my_screenmanager.add_widget(screen10)
         my_screenmanager.add_widget(screen11)
         my_screenmanager.add_widget(screen12)
         my_screenmanager.add_widget(screen13)
         my_screenmanager.add_widget(screen14)
+        my_screenmanager.add_widget(screen15)
 
         return my_screenmanager
 

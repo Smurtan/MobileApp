@@ -1,4 +1,5 @@
 #:import MapSource kivy_garden.mapview.MapSource
+
 MDScreen:
     name: "add_trip"
     MDBoxLayout:
@@ -41,10 +42,27 @@ MDScreen:
                             text:"Antonio Benderas"
                             markup:True
                             halign:"center"
-
-
+    MDCard:
+        size_hint: 1, .25
+        focus_behavior: False
+        pos_hint: {"center_x": .5, "center_y": .95}
+        elevation: 3
     MDTextField:
         hint_text: "Город"
         helper_text: "Введите город"
-        pos_hint: {"center_x": .5, "center_y": .95}
-        size_hint_x: .5
+        mode: "round"
+        pos_hint: {"center_x": .5, "center_y": .90}
+        size_hint_x: .7
+    Button:
+        text: "Ок"
+        font_size: "20sp"
+        size_hint: .3, .05
+        pos_hint: {"center_x": .8,"center_y": .1}
+        background_color: 0, 0, 0, 0
+        canvas.before:
+            Color:
+                rgb: rgba(50, 0, 255, 255)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [5]
