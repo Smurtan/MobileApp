@@ -112,7 +112,7 @@ class SignUp(Screen):
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
-
+        #
     def changer2(self, *args):
         self.manager.current = 'Login'
 
