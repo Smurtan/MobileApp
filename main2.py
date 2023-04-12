@@ -228,7 +228,7 @@ class InputTripInformation(Screen):
         self.manager.current = 'TripTo'
 
     def changer2(self, *args):
-        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text)
+        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text, self.screen1.ids.price.text)
         self.manager.current = 'MainWindow'
 
 
