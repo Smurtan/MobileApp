@@ -91,23 +91,23 @@ class SignUp(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        client.registration(
-            self.screen1.ids.surname.text,
-            self.screen1.ids.name.text,
-            self.screen1.ids.second_name.text,
-            self.screen1.ids.phone.text,
-            self.screen1.ids.password.text
-        )
-        self.screen1.ids.surname.text = ''
-        self.screen1.ids.name.text = ''
-        self.screen1.ids.second_name.text = ''
-        self.screen1.ids.phone.text = ''
-        self.screen1.ids.password.text = ''
-        print(self.screen1.ids.surname.text)
-        print(self.screen1.ids.name.text)
-        print(self.screen1.ids.second_name.text)
-        print(self.screen1.ids.phone.text)
-        print(self.screen1.ids.password.text)
+        # client.registration(
+        #     self.screen1.ids.surname.text,
+        #     self.screen1.ids.name.text,
+        #     self.screen1.ids.second_name.text,
+        #     self.screen1.ids.phone.text,
+        #     self.screen1.ids.password.text
+        # )
+        # self.screen1.ids.surname.text = ''
+        # self.screen1.ids.name.text = ''
+        # self.screen1.ids.second_name.text = ''
+        # self.screen1.ids.phone.text = ''
+        # self.screen1.ids.password.text = ''
+        # print(self.screen1.ids.surname.text)
+        # print(self.screen1.ids.name.text)
+        # print(self.screen1.ids.second_name.text)
+        # print(self.screen1.ids.phone.text)
+        # print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
@@ -589,10 +589,11 @@ class Travel(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
+        self.manager.transition.direction= 'left'
         self.manager.current = 'Burger'
 
-client = Client('192.168.63.197', 9090)
-client.connect()
+# client = Client('192.168.0.84', 8080)
+# client.connect()
 
 class MyApp(MDApp):
     def build(self):
