@@ -578,7 +578,7 @@ class Travel(Screen):
         # Make sure the height is such that there is something to scroll.
         layout.bind(minimum_height=layout.setter('height'))
         for i in range(10):
-            btn = Button(text="Ебать карточка", size_hint_y=None, height=30, color=(34, 34, 34, 255))
+            btn = Button(text="Ебать карточка", size_hint_y=None, height=50, background_color="blue")
             layout.add_widget(btn)
         a = scrollview.MDScrollView(size_hint=[1, .9], size=[Window.width, Window.height])
         a.add_widget(layout)
