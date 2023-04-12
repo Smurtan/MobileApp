@@ -1,24 +1,89 @@
 MDScreen:
-    MDGridLayout:
-        id:box
-        cols: 1
-        adaptive_height: True
-        spacing: "50dp"
-        padding: "10dp"
-        MDTextField:
-            hint_text: "Откуда"
-            helper_text: "Введите город"
-            mode: "round"
-            size_hint_x: .7
-        MDTextField:
-            hint_text: "Куда"
-            helper_text: "Введите город"
-            mode: "round"
-            pos_hint: {"center_x": .5, "center_y": .90}
-            size_hint_x: .7
-        MDTextField:
-            hint_text: "Дата"
-            helper_text: "Введите дату"
-            mode: "round"
-            pos_hint: {"center_x": .5, "center_y": .90}
-            size_hint_x: .7
+    name: "name"
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(50, 0, 255, 255)
+
+        Image:
+            source: "assets/car.png"
+            pos_hint: {"center_x": .5,"center_y": .8}
+            size_hint: .5, .5
+        MDLabel:
+            text: "Откуда поедем:"
+            font_size: "20"
+            pos_hint: {"center_y": .65}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDFloatLayout:
+            size_hint: .7, .07
+            pos_hint: {"center_x": .5, "center_y": .55}
+            TextInput:
+                hint_text: "Откуда"
+                mode: "round"
+                size_hint: .9, .9
+                pos_hint: {"center_x": .5, "center_y": .7}
+                background_color: 1, 1, 0, 0
+                foreground_color: rgba(50, 0, 255, 255)
+                cursor_color: rgba(50, 0, 255, 255)
+                font_size: "20sp"
+                cursor_width: "2sp"
+                multiline: False
+        MDLabel:
+            text: "Куда поедем:"
+            font_size: "20"
+            pos_hint: {"center_y": .45}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDFloatLayout:
+            size_hint: .7, .07
+            pos_hint: {"center_x": .5, "center_y": .35}
+            TextInput:
+                hint_text: "Куда"
+                mode: "round"
+                size_hint: .9, .9
+                pos_hint: {"center_x": .5, "center_y": .7}
+                background_color: 1, 1, 0, 0
+                foreground_color: rgba(50, 0, 255, 255)
+                cursor_color: rgba(50, 0, 255, 255)
+                font_size: "20sp"
+                cursor_width: "2sp"
+                multiline: False
+        MDLabel:
+            text: "Дата поездки:"
+            font_size: "20"
+            pos_hint: {"center_y": .25}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDFloatLayout:
+            size_hint: .7, .07
+            pos_hint: {"center_x": .5, "center_y": .15}
+            TextInput:
+                hint_text: "дд/мм/гггг"
+                mode: "round"
+                size_hint: .9, .9
+                pos_hint: {"center_x": .5, "center_y": .7}
+                background_color: 1, 1, 0, 0
+                foreground_color: rgba(50, 0, 255, 255)
+                cursor_color: rgba(50, 0, 255, 255)
+                font_size: "20sp"
+                cursor_width: "2sp"
+                multiline: False
+        #121
+        Button:
+            text: "Ок"
+            font_size: "24sp"
+            size_hint: .2, .05
+            pos_hint: {"center_x": .5,"center_y": .05}
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgb: rgba(50, 0, 255, 255)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [5]
