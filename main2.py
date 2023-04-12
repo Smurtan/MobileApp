@@ -170,10 +170,18 @@ class ActiveTrip(Screen):
     def __init__(self, **kwargs):
         super(ActiveTrip, self).__init__(**kwargs)
         self.screen1 = Screen()
-        card = MDCard(MDLabel(text="Водитель", size_hint_y=.8), id="card1",
-                      size_hint=[1, .9], focus_behavior=False,
-                      pos_hint={"center_x": .5, "center_y": .95}, elevation=3)
-
+        card = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
+        fam = 'Осокин'
+        name = 'Артем'
+        otch = 'Алексеевич'
+        card.ids.box.add_widget(MDLabel(text=f'Водитель: {fam} {name} {otch}'))
+        card.ids.box.add_widget(MDLabel(text='Пассажиры:'))
+        for i in range(4):
+            card.ids.box.add_widget(MDLabel(text=f'{fam} {name} {otch}'))
+        date = '24/12/2023'
+        card.ids.box.add_widget(MDLabel(text=f'Дата: {date}'))
+        value = '250$'
+        card.ids.box.add_widget(MDLabel(text=f'Стоимость: {value}'))
         self.screen1.add_widget(card)
         self.add_widget(self.screen1)
 
