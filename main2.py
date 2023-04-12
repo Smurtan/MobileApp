@@ -125,7 +125,8 @@ class MainWindow(Screen):
         super(MainWindow, self).__init__(**kwargs)
         self.screen1 = Screen()
         self.screen1.add_widget(Builder.load_file("main.kv"))
-        my_button1 = MDFloatingActionButton(icon="account", elevation_normal=12, pos_hint={"center_x": .9, "center_y": .95},
+        my_button1 = MDFloatingActionButton(icon="account", elevation_normal=12,
+                                            pos_hint={"center_x": .9, "center_y": .95},
                                             size_hint=(None, None), segment_panel_height="56dp")
 
         my_button2 = MDFloatingActionButton(icon="plus", elevation_normal=12, pos_hint={"center_x": .5, "center_y": .1})
@@ -181,9 +182,12 @@ class TripFrom(Screen):
     def changer2(self, *args):
         self.manager.transition.direction = "left"
         print(self.screen1.ids.city.text)
-        from_coordinates = Coordinaty(self.screen1.ids.city.text)
-        print(from_coordinates.get_coordinates())
-        self.manager.current = 'TripTo'
+        try:
+            from_coordinates = Coordinaty(self.screen1.ids.city.text)
+            print(from_coordinates.get_coordinates())
+            self.manager.current = 'TripTo'
+        except(IndexError):
+            pass
 
 
 class TripTo(Screen):
@@ -210,10 +214,13 @@ class TripTo(Screen):
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        print(self.screen1.ids.city.text)
-        to_coordinates = Coordinaty(self.screen1.ids.city.text)
-        print(to_coordinates.get_coordinates())
-        self.manager.current = 'InputTripInformation'
+        try:
+            print(self.screen1.ids.city.text)
+            to_coordinates = Coordinaty(self.screen1.ids.city.text)
+            print(to_coordinates.get_coordinates())
+            self.manager.current = 'InputTripInformation'
+        except(IndexError):
+            pass
 
 
 class InputTripInformation(Screen):
@@ -575,13 +582,16 @@ class Burger(Screen):
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
-        print(self.screen1.ids.from_.text, self.screen1.ids.to_.text, self.screen1.ids.date.text)
-        from_coordinates = Coordinaty(self.screen1.ids.from_.text)
-        print(from_coordinates.get_coordinates())
-        to_coordinates = Coordinaty(self.screen1.ids.to_.text)
-        print(to_coordinates.get_coordinates())
-        self.manager.transition.direction = "right"
-        self.manager.current = 'Travel'
+        try:
+            print(self.screen1.ids.from_.text, self.screen1.ids.to_.text, self.screen1.ids.date.text)
+            from_coordinates = Coordinaty(self.screen1.ids.from_.text)
+            print(from_coordinates.get_coordinates())
+            to_coordinates = Coordinaty(self.screen1.ids.to_.text)
+            print(to_coordinates.get_coordinates())
+            self.manager.transition.direction = "right"
+            self.manager.current = 'Travel'
+        except(IndexError):
+            pass
 
 
 class Travel(Screen):
