@@ -82,7 +82,7 @@ class SignUp(Screen):
         self.screen1 = Screen()
         self.screen1.add_widget(Builder.load_file("SignUp.kv"))
         self.screen1 = Builder.load_file("SignUp.kv")
-        my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .34},
+        my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .18},
                             background_color=[0, 0, 0, 0])
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .64, "center_y": .04})
         my_button3 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
