@@ -519,7 +519,26 @@ class Burger(Screen):
         self.manager.current = 'MainWindow'
     def changer2(self, *args):
         self.manager.current = 'Travel'
+class Travel(Screen):
+    def __init__(self, **kwargs):
+        super(Travel, self).__init__(**kwargs)
+        screen1 = Screen()
+        layout = gridlayout.MDGridLayout(cols=1, spacing=10, size_hint_y=None)
+        # Make sure the height is such that there is something to scroll.
+        layout.bind(minimum_height=layout.setter('height'))
+        for i in range(10):
+            btn = Button(text="Ебать карточка", size_hint_y=None, height=30, color=(34, 34, 34, 255))
+            layout.add_widget(btn)
+        a = scrollview.MDScrollView(size_hint=[1, .9], size=[Window.width, Window.height])
+        a.add_widget(layout)
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(a)
+        self.add_widget(screen1)
 
+    def changer(self, *args):
+        self.manager.current = 'Burger'
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
@@ -540,6 +559,7 @@ class MyApp(MDApp):
         screen15 = InputTripInformation(name='InputTripInformation')
         screen16 = StrangeProfile(name='StrangeProfile')
         screen17 = Burger(name='Burger')
+        screen18 = Travel(name='Travel')
         my_screenmanager.add_widget(screen1)
         my_screenmanager.add_widget(screen2)
         my_screenmanager.add_widget(screen3)
@@ -557,6 +577,7 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen15)
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
+        my_screenmanager.add_widget(screen18)
         return my_screenmanager
 
 
