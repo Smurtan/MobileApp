@@ -2,13 +2,20 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.button import MDFloatingActionButton, MDIconButton, MDTextButton
-from kivymd.uix.expansionpanel import MDExpansionPanelThreeLine
+from kivymd.uix.expansionpanel import MDExpansionPanelThreeLine, MDExpansionPanelTwoLine
 from kivymd.uix import scrollview
 from kivymd.uix import gridlayout
 from kivy.uix.button import Button
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
+from kivy.uix.image import Image
+from kivymd.uix.card import MDCard
+import os
+from kivymd.uix.filemanager import MDFileManager
+from kivy.core.window import Window
+from kivymd.toast import toast
+from PIL import Image
 
 
 class Home(Screen):
@@ -100,22 +107,26 @@ class MainWindow(Screen):
 
         my_button2 = MDFloatingActionButton(icon="plus", elevation_normal=12, pos_hint={"center_x": .5, "center_y": .1})
 
+        my_button3 = MDFloatingActionButton(
+            icon="instagram", elevation_normal=0,
+            pos_hint={"center_x": .1, "center_y": .95},
+            size_hint=(None, None))
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
+        my_button3.bind(on_press=self.changer3)
 
         screen1.add_widget(my_button1)
         screen1.add_widget(my_button2)
+        screen1.add_widget(my_button3)
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        i = 2
-        print(i)
         self.manager.current = 'ProfileWindow'
 
     def changer2(self, *args):
-        i = 1
-        print(i)
         self.manager.current = 'TripFrom'
+    def changer3(self,*args):
+        self.manager.current = 'Burger'
 
 
 class TripFrom(Screen):
@@ -211,6 +222,10 @@ class ProfileWindow(Screen):
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
         my_button4.bind(on_press=self.changer4)
+        my_button5.bind(on_press=self.file_manager_open)
+        self.manager_open = False
+        self.file_manager = MDFileManager(exit_manager=self.exit_manager, select_path=self.select_path)
+
         screen1.add_widget(my_button1)
         screen1.add_widget(my_button2)
         screen1.add_widget(my_button3)
@@ -229,6 +244,27 @@ class ProfileWindow(Screen):
 
     def changer4(self, *args):
         self.manager.current = "Settings"
+
+    def file_manager_open(self, *args):
+        self.file_manager.show(os.path.expanduser("~"))  # output manager to the screen
+        self.manager_open = True
+
+    def exit_manager(self, *args):
+        self.manager_open = False
+        self.file_manager.close()
+
+    def select_path(self, path: str):
+        self.exit_manager()
+        toast(path)
+        print(path)
+        # im1 = Image.open(path)
+        # im1 = im1.save(r"C:\Users\Пользователь\PycharmProjects\MobileApp\sereza\myphoto.png")
+
+    def events(self, instance, keyboard, keycode, text, modifiers):
+        if keyboard in (1001, 27):
+            if self.manager_open:
+                self.file_manager.back()
+        return True
 
 
 class Reviews(Screen):
@@ -258,10 +294,9 @@ class HistoryTrip(Screen):
         screen1 = Screen()
         widget_grid_layout = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
         for i in range(10):
-            widget_grid_layout.ids.box.add_widget(MDExpansionPanelThreeLine(
+            widget_grid_layout.ids.box.add_widget(MDExpansionPanelTwoLine(
                 text="Text",
                 secondary_text="Secondary text",
-                tertiary_text="Tertiary text",
             ))
         screen1.add_widget(widget_grid_layout)
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
@@ -418,6 +453,56 @@ class NameChange(Screen):
         self.manager.current = 'DataChange'
 
 
+class StrangeProfile(Screen):
+    def __init__(self, **kwargs):
+        super(StrangeProfile, self).__init__(**kwargs)
+        screen1 = Screen()
+        name_profile = MDLabel(text="Имя", font_size="48", pos_hint={"center_y": .7},
+                               halign="center",
+                               color=[34, 34, 34, 255])
+        rating_profile = MDLabel(text="Рейтинг: 3.5/5",
+                                 font_size="24", pos_hint={"center_y": .6},
+                                 halign="center",
+                                 color=[34, 34, 34, 255])
+        text_review = MDLabel(text="Отзывы:",
+                              font_size="24", pos_hint={"center_y": .6},
+                              halign="center",
+                              color=[34, 34, 34, 255])
+        scroll = scrollview.MDScrollView(
+            gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True, spacing="50dp", padding="10dp"))
+        scroll_reviews = gridlayout.MDGridLayout(cols=1, adaptive_height=True)
+        scroll.ids.box.add_widget(name_profile)
+        scroll.ids.box.add_widget(rating_profile)
+        scroll.ids.box.add_widget(text_review)
+        for i in range(10):
+            scroll_reviews.add_widget(MDExpansionPanelTwoLine(
+                text=str(i + 1),
+                secondary_text="asdasdsadjansdjnajsdnadjsnasdjda",
+            ))
+        scroll.ids.box.add_widget(scroll_reviews)
+        screen1.add_widget(scroll)
+        self.add_widget(screen1)
+
+
+class Burger(Screen):
+    def __init__(self, **kwargs):
+        super(Burger, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.scroll = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box",
+                                                                      cols=1,
+                                                                      adaptive_height=True,
+                                                                      spacing="10dp",
+                                                                      padding="20dp"))
+        from_ = MDTextField(hint_text="Откуда", mode="round", size_hint_x=.7)
+        to_ = MDTextField(hint_text="Куда", mode="round", size_hint_x=.7)
+        date_ = MDTextField(hint_text="дд/мм/гггг", helper_text="Введите дату поездки", size_hint_x=.7,
+                            date_format="dd/mm/yyyy")
+        self.scroll.ids.box.add_widget(from_)
+        self.scroll.ids.box.add_widget(to_)
+        self.scroll.ids.box.add_widget(date_)
+        self.screen1.add_widget(self.scroll)
+        self.add_widget(self.screen1)
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
@@ -436,7 +521,8 @@ class MyApp(MDApp):
         screen13 = PhoneChange(name='PhoneChange')
         screen14 = NameChange(name='NameChange')
         screen15 = InputTripInformation(name='InputTripInformation')
-
+        screen16 = StrangeProfile(name='StrangeProfile')
+        screen17 = Burger(name='Burger')
         my_screenmanager.add_widget(screen1)
         my_screenmanager.add_widget(screen2)
         my_screenmanager.add_widget(screen3)
@@ -452,7 +538,8 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen13)
         my_screenmanager.add_widget(screen14)
         my_screenmanager.add_widget(screen15)
-
+        my_screenmanager.add_widget(screen16)
+        my_screenmanager.add_widget(screen17)
         return my_screenmanager
 
 
