@@ -2,9 +2,6 @@ MDScreen:
 	name: "home"
 	MDFloatLayout:
 		md_bg_color: 1, 1, 1, 1
-		Image:
-			source: "assets/logo.png"
-			pos_hint: {"center_x": .10, "center_y": .95}
 	    Image:
 	        source: "assets/back.png"
 	        size_hint: .8, .8
@@ -25,7 +22,7 @@ MDScreen:
 	        halign: "center"
 	        color: rgba(127, 127, 127, 255)
 	    Button: #Кнопка для входа
-	        text: "Я УЖЕ СМЕШЕРИК"
+	        text: "Войти"
 	        size_hint: .66, .065
 	        pos_hint: {"center_x": .5, "center_y": .19}
 	        background_color: 0, 0, 0, 0
@@ -39,7 +36,7 @@ MDScreen:
 	                pos: self.pos
 	                radius: [5]
 	    Button: #Кнопка для регистрации
-	        text: "Я НОВЕНЬКИЙ"
+	        text: "Зарегистрироваться"
 	        size_hint: .66, .065
 	        pos_hint: {"center_x": .5, "center_y": .09}
 	        background_color: 0, 0, 0, 0
