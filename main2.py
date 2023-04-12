@@ -112,7 +112,7 @@ class SignUp(Screen):
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
-        #
+
     def changer2(self, *args):
         self.manager.current = 'Login'
 
@@ -170,7 +170,7 @@ class ActiveTrip(Screen):
     def __init__(self, **kwargs):
         super(ActiveTrip, self).__init__(**kwargs)
         self.screen1 = Screen()
-        card = MDCard(MDLabel(text="Водитель", size_hint_y=.8,font_size="22sp"), id="card1",
+        card = MDCard(MDLabel(text="Водитель", size_hint_y=.8), id="card1",
                       size_hint=[1, .9], focus_behavior=False,
                       pos_hint={"center_x": .5, "center_y": .95}, elevation=3)
 
