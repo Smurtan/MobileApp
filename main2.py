@@ -6,19 +6,12 @@ from kivymd.uix.expansionpanel import MDExpansionPanelThreeLine, MDExpansionPane
 from kivymd.uix import scrollview
 from kivymd.uix import gridlayout
 from kivy.uix.button import Button
-from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
-from kivymd.uix.textfield import MDTextField
-from kivy.uix.image import Image
-from kivymd.uix.card import MDCard
 import os
 from kivymd.uix.filemanager import MDFileManager
-from kivy.core.window import Window
 from kivymd.toast import toast
-from PIL import Image
-from socket import socket, AF_INET, SOCK_STREAM
-import json
-from geopy import GoogleV3
+from kivy.core.window import Window
+
 
 class Home(Screen):
     def __init__(self, **kwargs):
@@ -469,7 +462,6 @@ class NameChange(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
-
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
@@ -513,8 +505,9 @@ class Burger(Screen):
 
     def __init__(self, **kwargs):
         super(Burger, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("burger.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("burger.kv"))
+        self.screen1 = Builder.load_file("burger.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
                                   text_color=[0, 0, 0, 0])
         my_button2 = Button(font_size="24sp", size_hint=[.2, .05],
@@ -522,14 +515,18 @@ class Burger(Screen):
                             background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
         self.manager.current = 'MainWindow'
+
     def changer2(self, *args):
+        print(self.screen1.ids.from_.text, self.screen1.ids.to_.text, self.screen1.ids.date.text)
         self.manager.current = 'Travel'
+
+
 class Travel(Screen):
     def __init__(self, **kwargs):
         super(Travel, self).__init__(**kwargs)
@@ -550,6 +547,8 @@ class Travel(Screen):
 
     def changer(self, *args):
         self.manager.current = 'Burger'
+
+
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
