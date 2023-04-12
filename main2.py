@@ -39,9 +39,11 @@ class Home(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'Login'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'SignUp'
 
 
@@ -73,6 +75,7 @@ class Login(Screen):
         self.manager.current = 'SignUp'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
 
@@ -106,6 +109,7 @@ class SignUp(Screen):
         self.manager.current = 'Login'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
 
@@ -133,12 +137,15 @@ class MainWindow(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'ProfileWindow'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'TripFrom'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Burger'
 
 
@@ -161,9 +168,11 @@ class TripFrom(Screen):
         self.my_button2.bind(on_press=self.changer2)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'TripTo'
 
 
@@ -185,9 +194,11 @@ class TripTo(Screen):
         self.my_button2.bind(on_press=self.changer2)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'TripFrom'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'InputTripInformation'
 
 
@@ -206,6 +217,7 @@ class InputTripInformation(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'TripTo'
 
     def changer2(self, *args):
@@ -247,15 +259,19 @@ class ProfileWindow(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'Reviews'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'HistoryTrip'
 
     def changer4(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = "Settings"
 
     def file_manager_open(self, *args):
@@ -298,6 +314,7 @@ class Reviews(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -318,6 +335,7 @@ class HistoryTrip(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -349,15 +367,19 @@ class Settings(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'PasswordChange'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
     def changer4(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -385,15 +407,19 @@ class DataChange(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'PhoneChange'
 
     def changer3(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'NameChange'
 
     def changer4(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Settings'
 
 
@@ -414,9 +440,11 @@ class PasswordChange(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Settings'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'Settings'
 
 
@@ -437,9 +465,11 @@ class PhoneChange(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'DataChange'
 
 
@@ -460,9 +490,11 @@ class NameChange(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
+        self.manager.transition.direction = "right"
         self.manager.current = 'DataChange'
 
 
@@ -516,6 +548,7 @@ class Burger(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
+        self.manager.transition.direction = "left"
         self.manager.current = 'MainWindow'
     def changer2(self, *args):
         self.manager.current = 'Travel'
