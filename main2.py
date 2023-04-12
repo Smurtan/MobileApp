@@ -60,9 +60,20 @@ class Login(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
+        user = client.login(
+            self.screen1.ids.phone.text,
+            self.screen1.ids.password.text
+        )
+        self.screen1.ids.phone.text = ''
+        self.screen1.ids.password.text = ''
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
-        self.manager.current = 'MainWindow'
+
+        if user:
+            self.manager.current = 'MainWindow'
+        else:
+            self.screen1.ids.phone.text = ''
+            self.screen1.ids.password.text = ''
 
     def changer2(self, *args):
         self.manager.current = 'SignUp'
@@ -91,12 +102,12 @@ class SignUp(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        client.registration(
+        user = client.registration(
             self.screen1.ids.surname.text,
             self.screen1.ids.name.text,
             self.screen1.ids.second_name.text,
-            self.screen1.ids.phone.text,
-            self.screen1.ids.password.text
+            self.screen1.ids.password.text,
+            self.screen1.ids.phone.text
         )
         self.screen1.ids.surname.text = ''
         self.screen1.ids.name.text = ''
@@ -108,6 +119,7 @@ class SignUp(Screen):
         print(self.screen1.ids.second_name.text)
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
+        USER = user
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
@@ -591,8 +603,10 @@ class Travel(Screen):
     def changer(self, *args):
         self.manager.current = 'Burger'
 
-client = Client('192.168.63.197', 9090)
+client = Client('192.168.0.84', 8080)
 client.connect()
+
+USER = None
 
 class MyApp(MDApp):
     def build(self):

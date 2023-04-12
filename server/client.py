@@ -44,8 +44,8 @@ class Client:
             'lastName': lastName,
             'firstName': firstName,
             'middleName': middleName,
-            'password': password,
-            'phone': phone
+            'phone': phone,
+            'password': password
         })
 
         data = json.loads(self.cli.recv(1024).decode('utf-8'))
@@ -55,9 +55,9 @@ class Client:
         else:
             return False
 
-    def login(self, user, password):
+    def login(self, phone, password):
         self.sender('login', {
-            'user': user,
+            'phone': phone,
             'password': password
         })
 
@@ -65,7 +65,7 @@ class Client:
         print(data)
         if data['answer']:
             print('Вы вошли в систему!')
-            return True
+            return data['answer']
         else:
             print('Неверный логин, или пароль.')
             return False
@@ -93,8 +93,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Все ваши отзывы')
+            return data['answer']
         else:
             print('Ой, их нет.')
+            return False
 
     def addReview(self, user, travel, count_pas, text, star):
         self.sender('add_review', {
@@ -109,8 +111,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Отзыв успешно добавлен')
+            return True
         else:
             print('Произошло неизведанное')
+            return False
 
     def addTravel(self, user, From, To, date, time, prise, count_pas):
         self.sender('add_travel', {
@@ -127,8 +131,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Поездка добавлена ', data['answer'])
+            return True
         else:
             print('Произошло неизведанное')
+            return False
 
     def loadReview(self, From, To, date):
         self.sender('load_fellow', {
@@ -141,8 +147,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Попутчики загружены ', data['answer'])
+            return data['answer']
         else:
             print('Произошло неизведанное')
+            return False
 
     def addRequest(self, user, From, To, date):
         self.sender('add_request', {
@@ -156,8 +164,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Запрос успешно добавлен')
+            return True
         else:
             print('Произошло неизведанное')
+            return False
 
     def addPassager(self, user, travel):
         self.sender('add_passager', {
@@ -169,8 +179,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Запрос успешно добавлен')
+            return True
         else:
             print('Произошло неизведанное')
+            return False
 
     def addFellow(self, user, travel, From, To, date):
         self.sender('add_fellow', {
@@ -185,8 +197,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Запрос успешно добавлен')
+            return True
         else:
             print('Произошло неизведанное')
+            return False
 
     def loadTravels(self, From, To, date):
         self.sender('load_travels', {
@@ -199,8 +213,10 @@ class Client:
         print(data)
         if data['answer']:
             print('Возможные поездки ', data['answer'])
+            return data['answer']
         else:
             print('Произошло неизведанное')
+            return False
 
     def loadStoryTravel(self, user):
         self.sender('load_story_travel', {
@@ -211,6 +227,8 @@ class Client:
         print(data)
         if data['answer']:
             print('Вся ваша история ', data['answer'])
+            return data['answer']
         else:
             print('Произошло неизведанное')
+            return False
 
