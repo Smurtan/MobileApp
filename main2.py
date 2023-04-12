@@ -16,6 +16,9 @@ from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
 from PIL import Image
+from socket import socket, AF_INET, SOCK_STREAM
+import json
+
 
 
 class Home(Screen):
@@ -550,6 +553,7 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
         return my_screenmanager
+
 
 
 MyApp().run()
