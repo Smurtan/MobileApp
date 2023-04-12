@@ -22,15 +22,15 @@ MDScreen:
 	    pos_hint: {"center_x": .58, "center_y": .79}
 	    color: rgba(135, 133, 193, 255)
 
-    MDFloatLayout: #сдесь короче имя вводят
+    MDFloatLayout: #сдесь короче фамилию вводят
 	    size_hint: .7, .07
-	    pos_hint: {"center_x": .5, "center_y": .68}
+	    pos_hint: {"center_x": .5, "center_y": .70}
 	    TextInput:
-	        id: name
-	        hint_text: "Username"
+	        id: surname
+	        hint_text: "Фамилия"
 	        #font_name: "MPoppins"
 	        size_hint_y: .75
-	        pos_hint: {"center_x": .43, "center_y": .5}
+	        pos_hint: {"center_x": .49, "center_y": .5}
 	        background_color: 1, 1, 1, 0
 	        foreground_color: rgba(0, 0, 59, 255)
 	        cursor_color: rgba(0, 0, 59, 255)
@@ -38,19 +38,59 @@ MDScreen:
 	        cursor_width: "2sp"
 	        multiline: False
 	    MDFloatLayout:
-	        pos_hint: {"center_x": .45, "center_y": .0}
+	        pos_hint: {"center_x": .5, "center_y": .0}
+	        size_hint_y: .03
+	        md_bg_color: rgba(178, 178, 178, 255)
+
+    MDFloatLayout: #сдесь короче имя вводят
+	    size_hint: .7, .07
+	    pos_hint: {"center_x": .5, "center_y": .60}
+	    TextInput:
+	        id: name
+	        hint_text: "Имя"
+	        #font_name: "MPoppins"
+	        size_hint_y: .75
+	        pos_hint: {"center_x": .49, "center_y": .5}
+	        background_color: 1, 1, 1, 0
+	        foreground_color: rgba(0, 0, 59, 255)
+	        cursor_color: rgba(0, 0, 59, 255)
+	        font_size: "14sp"
+	        cursor_width: "2sp"
+	        multiline: False
+	    MDFloatLayout:
+	        pos_hint: {"center_x": .5, "center_y": .0}
+	        size_hint_y: .03
+	        md_bg_color: rgba(178, 178, 178, 255)
+
+    MDFloatLayout: #здесь короче отчество вводят
+	    size_hint: .7, .07
+	    pos_hint: {"center_x": .5, "center_y": .50}
+	    TextInput:
+	        id: second_name
+	        hint_text: "Отчество"
+	        #font_name: "MPoppins"
+	        size_hint_y: .75
+	        pos_hint: {"center_x": .49, "center_y": .5}
+	        background_color: 1, 1, 1, 0
+	        foreground_color: rgba(0, 0, 59, 255)
+	        cursor_color: rgba(0, 0, 59, 255)
+	        font_size: "14sp"
+	        cursor_width: "2sp"
+	        multiline: False
+	    MDFloatLayout:
+	        pos_hint: {"center_x": .5, "center_y": .0}
 	        size_hint_y: .03
 	        md_bg_color: rgba(178, 178, 178, 255)
 
 	MDFloatLayout: #сдесь короче телефон вводят
 	    size_hint: .7, .07
-	    pos_hint: {"center_x": .5, "center_y": .56}
+	    pos_hint: {"center_x": .5, "center_y": .40}
 	    TextInput:
 	        id: phone
 	        hint_text: "+7 (900) 000 00-00"
 	        #font_name: "MPoppins"
 	        size_hint_y: .75
-	        pos_hint: {"center_x": .43, "center_y": .5}
+	        pos_hint: {"center_x": .49, "center_y": .5}
 	        background_color: 1, 1, 1, 0
 	        foreground_color: rgba(0, 0, 59, 255)
 	        cursor_color: rgba(0, 0, 59, 255)
@@ -58,18 +98,19 @@ MDScreen:
 	        cursor_width: "2sp"
 	        multiline: False
 	    MDFloatLayout:
-	        pos_hint: {"center_x": .45, "center_y": .0}
+	        pos_hint: {"center_x": .5, "center_y": .0}
 	        size_hint_y: .03
 	        md_bg_color: rgba(178, 178, 178, 255)
+
     MDFloatLayout: #а сдесь вводят пароль звездочками
 	    size_hint: .7, .07
-	    pos_hint: {"center_x": .5, "center_y": .44}
+	    pos_hint: {"center_x": .5, "center_y": .30}
 	    TextInput:
 	        id: password
 	        hint_text: "Password"
 	        #font_name: "MPoppins"
 	        size_hint_y: .75
-	        pos_hint: {"center_x": .43, "center_y": .5}
+	        pos_hint: {"center_x": .49, "center_y": .5}
 	        background_color: 1, 1, 1, 0
 	        foreground_color: rgba(0, 0, 59, 255)
 	        cursor_color: rgba(0, 0, 59, 255)
@@ -78,14 +119,14 @@ MDScreen:
 	        multiline: False
 	        password: True
 	    MDFloatLayout:
-	        pos_hint: {"center_x": .45, "center_y": .0}
+	        pos_hint: {"center_x": .5, "center_y": .0}
 	        size_hint_y: .03
 	        md_bg_color: rgba(178, 178, 178, 255)
 
-    Button: #здесь присоединить с картой
+    Button:
         text: "ДА ВПУСТИ УЖЕ"
         size_hint: .66, .065
-        pos_hint: {"center_x": .5, "center_y": .34}
+        pos_hint: {"center_x": .5, "center_y": .18}
         background_color: 0, 0, 0, 0
         #font_name: "BPoppins"
         canvas.before:
@@ -97,19 +138,16 @@ MDScreen:
                 radius: [5]
     MDTextButton:
         text: "Отчистить"
-        pos_hint: {"center_x": .5, "center_y": .28}
+        pos_hint: {"center_x": .5, "center_y": .12}
         color: rgba(68, 78, 132, 255)
         font_size: "12sp"
-        #font_name: "BPoppins"
     MDLabel:
         text: "У меня есть аккаунт"
-	    #font_name: "BPoppins"
 	    font_size: "11sp"
 	    pos_hint: {"center_x": .75, "center_y": .04}
 	    color: rgba(135, 133, 193, 255)
 	MDTextButton:
         text: "Войти"
-	    #font_name: "BPoppins"
 	    font_size: "11sp"
 	    pos_hint: {"center_x": .64, "center_y": .04}
 	    color: rgba(52, 0, 231, 255)
