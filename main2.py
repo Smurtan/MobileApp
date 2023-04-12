@@ -32,7 +32,7 @@ class Home(Screen):
     def changer1(self, *args):
         self.manager.transition.direction = "left"
         self.manager.current = 'Login'
-
+#пароль
     def changer2(self, *args):
         self.manager.transition.direction = "left"
         self.manager.current = 'SignUp'
@@ -618,4 +618,5 @@ class MyApp(MDApp):
         return my_screenmanager
 
 
-MyApp().run()
+if __name__ == '__main__':
+    MyApp().run()
