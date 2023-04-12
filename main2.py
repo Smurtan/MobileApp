@@ -12,8 +12,6 @@ from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
 
-from server.client import Client
-
 class Home(Screen):
     def __init__(self, **kwargs):
         super(Home, self).__init__(**kwargs)
@@ -34,7 +32,7 @@ class Home(Screen):
     def changer1(self, *args):
         self.manager.transition.direction = "left"
         self.manager.current = 'Login'
-#пароль
+
     def changer2(self, *args):
         self.manager.transition.direction = "left"
         self.manager.current = 'SignUp'
@@ -91,18 +89,6 @@ class SignUp(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        client.registration(
-            self.screen1.ids.surname.text,
-            self.screen1.ids.name.text,
-            self.screen1.ids.second_name.text,
-            self.screen1.ids.phone.text,
-            self.screen1.ids.password.text
-        )
-        self.screen1.ids.surname.text = ''
-        self.screen1.ids.name.text = ''
-        self.screen1.ids.second_name.text = ''
-        self.screen1.ids.phone.text = ''
-        self.screen1.ids.password.text = ''
         print(self.screen1.ids.surname.text)
         print(self.screen1.ids.name.text)
         print(self.screen1.ids.second_name.text)
@@ -590,13 +576,8 @@ class Travel(Screen):
 
     def changer(self, *args):
         self.manager.current = 'Burger'
-
-client = Client('192.168.56.1', 8888)
-client.connect()
-
 class MyApp(MDApp):
     def build(self):
-        #self.client = Client('192.168.56.1', 8888).connect()
         my_screenmanager = ScreenManager()
         screen1 = Home(name='Home')
         screen2 = Login(name='Login')
@@ -637,6 +618,4 @@ class MyApp(MDApp):
         return my_screenmanager
 
 
-if __name__ == '__main__':
-    #Client('192.168.56.1', 8888).connect()
-    MyApp().run()
+MyApp().run()
