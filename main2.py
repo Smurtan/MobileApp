@@ -18,8 +18,7 @@ from kivymd.toast import toast
 from PIL import Image
 from socket import socket, AF_INET, SOCK_STREAM
 import json
-
-
+from geopy import GoogleV3
 
 class Home(Screen):
     def __init__(self, **kwargs):
@@ -39,11 +38,9 @@ class Home(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'Login'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'SignUp'
 
 
@@ -75,7 +72,6 @@ class Login(Screen):
         self.manager.current = 'SignUp'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
 
@@ -109,15 +105,14 @@ class SignUp(Screen):
         self.manager.current = 'Login'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
 
 class MainWindow(Screen):
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("main.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("main.kv"))
         my_button1 = MDFloatingActionButton(icon="git", elevation_normal=12, pos_hint={"center_x": .9, "center_y": .95},
                                             size_hint=(None, None), segment_panel_height="56dp")
 
@@ -131,96 +126,93 @@ class MainWindow(Screen):
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
 
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        screen1.add_widget(my_button3)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.screen1.add_widget(my_button3)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'ProfileWindow'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'TripFrom'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Burger'
 
 
 class TripFrom(Screen):
     def __init__(self, **kwargs):
         super(TripFrom, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Builder.load_file("add_trip.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
                                  background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(self.my_button2)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(self.my_button2)
         self.a = MDLabel(text="Где собираемся?", font_size="20", pos_hint={"center_y": .97}, halign="center",
                          color=[34, 34, 34, 255])
-        screen1.add_widget(self.a)
-        self.add_widget(screen1)
-        self.screen = screen1
+        self.screen1.add_widget(self.a)
+        self.add_widget(self.screen1)
         self.my_button2.bind(on_press=self.changer2)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
+        print(self.screen1.ids.city.text)
         self.manager.current = 'TripTo'
 
 
 class TripTo(Screen):
     def __init__(self, **kwargs):
         super(TripTo, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Builder.load_file("add_trip.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
                                  background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(self.my_button2)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(self.my_button2)
         self.a = MDLabel(text="Куда едем?", font_size="20", pos_hint={"center_y": .97}, halign="center",
                          color=[34, 34, 34, 255])
-        screen1.add_widget(self.a)
-        self.add_widget(screen1)
+        self.screen1.add_widget(self.a)
+        self.add_widget(self.screen1)
         self.my_button2.bind(on_press=self.changer2)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'TripFrom'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
+        print(self.screen1.ids.city.text)
         self.manager.current = 'InputTripInformation'
 
 
 class InputTripInformation(Screen):
     def __init__(self, **kwargs):
         super(InputTripInformation, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("inf_trip.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("inf_trip.kv"))
+        self.screen1 = Builder.load_file("inf_trip.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         my_button1.bind(on_press=self.changer1)
         my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
                             background_color=[0, 0, 0, 0])
         my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'TripTo'
 
     def changer2(self, *args):
+        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text)
         self.manager.current = 'MainWindow'
 
 
@@ -259,19 +251,15 @@ class ProfileWindow(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'Reviews'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'HistoryTrip'
 
     def changer4(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = "Settings"
 
     def file_manager_open(self, *args):
@@ -314,7 +302,6 @@ class Reviews(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -335,7 +322,6 @@ class HistoryTrip(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -367,19 +353,15 @@ class Settings(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'PasswordChange'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
     def changer4(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
 
@@ -407,27 +389,24 @@ class DataChange(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'PhoneChange'
 
     def changer3(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'NameChange'
 
     def changer4(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Settings'
 
 
 class PasswordChange(Screen):
     def __init__(self, **kwargs):
         super(PasswordChange, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("password.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("password.kv"))
+        self.screen1 = Builder.load_file("password.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
                                   text_color=[0, 0, 0, 0])
         my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
@@ -435,24 +414,24 @@ class PasswordChange(Screen):
                             background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'Settings'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "right"
+        print(self.screen1.ids.password.text, self.screen1.ids.password.text, self.screen1.ids.password.text)
         self.manager.current = 'Settings'
 
 
 class PhoneChange(Screen):
     def __init__(self, **kwargs):
         super(PhoneChange, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("phonenumber.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("phonenumber.kv"))
+        self.screen1 = Builder.load_file("phonenumber.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
                                   text_color=[0, 0, 0, 0])
         my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
@@ -460,24 +439,24 @@ class PhoneChange(Screen):
                             background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "right"
+        print(self.screen1.ids.phone.text)
         self.manager.current = 'DataChange'
 
 
 class NameChange(Screen):
     def __init__(self, **kwargs):
         super(NameChange, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("name.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("name.kv"))
+        self.screen1 = Builder.load_file("name.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp",
                                   text_color=[0, 0, 0, 0])
         my_button2 = Button(font_size="24sp", size_hint=[.1, .05],
@@ -485,16 +464,16 @@ class NameChange(Screen):
                             background_color=[0, 0, 0, 0])
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "right"
+
         self.manager.current = 'DataChange'
 
     def changer2(self, *args):
-        self.manager.transition.direction = "right"
+        print(self.screen1.ids.fam.text, self.screen1.ids.name.text, self.screen1.ids.otch.text, )
         self.manager.current = 'DataChange'
 
 
@@ -548,7 +527,6 @@ class Burger(Screen):
         self.add_widget(screen1)
 
     def changer1(self, *args):
-        self.manager.transition.direction = "left"
         self.manager.current = 'MainWindow'
     def changer2(self, *args):
         self.manager.current = 'Travel'
@@ -591,7 +569,6 @@ class MyApp(MDApp):
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
         return my_screenmanager
-
 
 
 MyApp().run()
