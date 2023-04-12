@@ -318,8 +318,9 @@ class Home(Screen):
 class Login(Screen):
     def __init__(self, **kwargs):
         super(Login, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("login.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("login.kv"))
+        self.screen1 = Builder.load_file("login.kv")
         my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .34},
                             background_color=[0, 0, 0, 0])
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .68, "center_y": .04},
@@ -328,12 +329,14 @@ class Login(Screen):
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        screen1.add_widget(my_button3)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.screen1.add_widget(my_button3)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
+        print(self.screen1.ids.phone.text)
+        print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
@@ -346,8 +349,9 @@ class Login(Screen):
 class SignUp(Screen):
     def __init__(self, **kwargs):
         super(SignUp, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("SignUp.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("SignUp.kv"))
+        self.screen1 = Builder.load_file("SignUp.kv")
         my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .34},
                             background_color=[0, 0, 0, 0])
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .64, "center_y": .04})
@@ -355,12 +359,15 @@ class SignUp(Screen):
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        screen1.add_widget(my_button3)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.screen1.add_widget(my_button3)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
+        print(self.screen1.ids.name.text)
+        print(self.screen1.ids.phone.text)
+        print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
 
     def changer2(self, *args):
@@ -398,7 +405,8 @@ class MainWindow(Screen):
 
     def changer2(self, *args):
         self.manager.current = 'TripFrom'
-    def changer3(self,*args):
+
+    def changer3(self, *args):
         self.manager.current = 'Burger'
 
 
@@ -615,7 +623,7 @@ class Settings(Screen):
         self.manager.current = 'PasswordChange'
 
     def changer3(self, *args):
-        self.manager.current = 'MainWindow'
+        self.manager.current = 'Home'
 
     def changer4(self, *args):
         self.manager.current = 'ProfileWindow'
@@ -775,6 +783,7 @@ class Burger(Screen):
         self.scroll.ids.box.add_widget(date_)
         self.screen1.add_widget(self.scroll)
         self.add_widget(self.screen1)
+
 
 class MyApp(MDApp):
     def build(self):
