@@ -9,32 +9,67 @@ MDScreen:
             theme_text_color: "Custom"
             text_color: rgba(50, 0, 255, 255)
         MDLabel:
-            text: "Смена номера"
+            text: "Смена ФИО"
             font_size: "18"
-            pos_hint: {"center_x": .8,"center_y": .965}
+            pos_hint: {"center_x": .8,"center_y": .95}
             halign: "center"
             color: rgba(34, 34, 34, 255)
-        MDLabel:
-            text: "телефона"
-            font_size: "18"
-            pos_hint: {"center_x": .8,"center_y": .935}
-            halign: "center"
-            color: rgba(34, 34, 34, 255)
+
         Image:
             source: "assets/name.png"
-            pos_hint: {"center_x": .5,"center_y": .7}
+            pos_hint: {"center_x": .5,"center_y": .8}
             size_hint: .5, .5
         MDLabel:
-            text: "Введите новое имя:"
+            text: "Введите новую фамилию:"
             font_size: "20"
-            pos_hint: {"center_y": .4}
+            pos_hint: {"center_y": .65}
             halign: "center"
             color: rgba(34, 34, 34, 255)
         MDFloatLayout:
             size_hint: .7, .07
-            pos_hint: {"center_x": .5, "center_y": .3}
+            pos_hint: {"center_x": .5, "center_y": .55}
+            TextInput:
+                hint_text: "Введите фамилию"
+                mode: "round"
+                size_hint: .9, .9
+                pos_hint: {"center_x": .5, "center_y": .7}
+                background_color: 1, 1, 0, 0
+                foreground_color: rgba(50, 0, 255, 255)
+                cursor_color: rgba(50, 0, 255, 255)
+                font_size: "20sp"
+                cursor_width: "2sp"
+                multiline: False
+        MDLabel:
+            text: "Введите новое имя:"
+            font_size: "20"
+            pos_hint: {"center_y": .45}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDFloatLayout:
+            size_hint: .7, .07
+            pos_hint: {"center_x": .5, "center_y": .35}
             TextInput:
                 hint_text: "Введите имя"
+                mode: "round"
+                size_hint: .9, .9
+                pos_hint: {"center_x": .5, "center_y": .7}
+                background_color: 1, 1, 0, 0
+                foreground_color: rgba(50, 0, 255, 255)
+                cursor_color: rgba(50, 0, 255, 255)
+                font_size: "20sp"
+                cursor_width: "2sp"
+                multiline: False
+        MDLabel:
+            text: "Введите новое отчество:"
+            font_size: "20"
+            pos_hint: {"center_y": .25}
+            halign: "center"
+            color: rgba(34, 34, 34, 255)
+        MDFloatLayout:
+            size_hint: .7, .07
+            pos_hint: {"center_x": .5, "center_y": .15}
+            TextInput:
+                hint_text: "Введите отчество"
                 mode: "round"
                 size_hint: .9, .9
                 pos_hint: {"center_x": .5, "center_y": .7}
