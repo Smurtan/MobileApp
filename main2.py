@@ -95,7 +95,9 @@ class SignUp(Screen):
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
+        print(self.screen1.ids.surname.text)
         print(self.screen1.ids.name.text)
+        print(self.screen1.ids.second_name.text)
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
         self.manager.current = 'MainWindow'
