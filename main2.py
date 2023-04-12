@@ -125,13 +125,13 @@ class MainWindow(Screen):
         super(MainWindow, self).__init__(**kwargs)
         self.screen1 = Screen()
         self.screen1.add_widget(Builder.load_file("main.kv"))
-        my_button1 = MDFloatingActionButton(icon="git", elevation_normal=12, pos_hint={"center_x": .9, "center_y": .95},
+        my_button1 = MDFloatingActionButton(icon="account", elevation_normal=12, pos_hint={"center_x": .9, "center_y": .95},
                                             size_hint=(None, None), segment_panel_height="56dp")
 
         my_button2 = MDFloatingActionButton(icon="plus", elevation_normal=12, pos_hint={"center_x": .5, "center_y": .1})
 
         my_button3 = MDFloatingActionButton(
-            icon="instagram", elevation_normal=0,
+            icon="car-search", elevation_normal=0,
             pos_hint={"center_x": .1, "center_y": .95},
             size_hint=(None, None))
         my_button1.bind(on_press=self.changer1)
