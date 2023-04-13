@@ -15,7 +15,7 @@ MDScreen:
 	        color: rgba(34, 34, 34, 255)
 
 	    Button: #Кнопка для входа
-	        text: "У меня есть аккаунт"
+	        text: "Войти"
 	        size_hint: .66, .065
 	        pos_hint: {"center_x": .5, "center_y": .19}
 	        background_color: 0, 0, 0, 0
@@ -23,21 +23,21 @@ MDScreen:
 
 	        canvas.before:
                 Color:
-                    rgb: rgba(52, 0, 231, 255)
+                    rgb: rgba(27, 151, 243, 255)
 	            RoundedRectangle:
 	                size: self.size
 	                pos: self.pos
 	                radius: [5]
 	    Button: #Кнопка для регистрации
-	        text: "Создать аккаунт"
+	        text: "Зарегистрироваться"
 	        size_hint: .66, .065
 	        pos_hint: {"center_x": .5, "center_y": .09}
 	        background_color: 0, 0, 0, 0
 	        #font_name: "BPoppins"
-	        color: rgba(52, 0, 231, 255)
+	        color: rgba(27, 151, 243, 255)
 	        canvas.before:
                 Color:
-                    rgb: rgba(52, 0, 231, 255)
+                    rgb: rgba(27, 151, 243, 255)
 	            Line:
 	                width: 1.2
 	                rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100

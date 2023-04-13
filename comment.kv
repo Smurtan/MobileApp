@@ -1,5 +1,5 @@
 MDScreen:
-    name: "inf_trip"
+    name: "comment"
     MDFloatLayout:
         md_bg_color: 1, 1, 1, 1
         MDIconButton:
@@ -29,25 +29,5 @@ MDScreen:
         pos_hint: {"center_x": .5, "center_y": .5}
 
         MDTextField:
-            id: date
-            hint_text: "дд/мм/гггг"
-            helper_text: "Введите дату поездки"
-            validator: "date"
-            date_format: "dd/mm/yyyy"
-            date_interval: "01/01/2023", "01/01/2030"
-
-        MDTextField:
-            id:time
-            hint_text: "чч:мм"
-            helper_text: "Введите время поездки"
-            validator: "time"
-            time_format: "hh:mm"
-
-        MDTextField:
-            id: number
-            hint_text: "Введите кол-во пассажиров"
-            #max_text_length: 5 #сдесь можно сделать черз переменную свободных мест
-
-        MDTextField:
-            id: price
-            hint_text: "Введите цену"
+            id: com
+            helper_text: "Напишите комментарий"

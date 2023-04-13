@@ -17,8 +17,8 @@ from server.client import Client
 class Home(Screen):
     def __init__(self, **kwargs):
         super(Home, self).__init__(**kwargs)
-        self.screen1 = Screen()
-        self.screen1.add_widget(Builder.load_file("home.kv"))
+        screen1 = Screen()
+        screen1.add_widget(Builder.load_file("home.kv"))
         my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .19},
                             background_color=[0, 0, 0, 0])
         my_button2 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .09},
@@ -27,20 +27,17 @@ class Home(Screen):
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
 
-        self.screen1.add_widget(my_button1)
-        self.screen1.add_widget(my_button2)
-        self.add_widget(self.screen1)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        self.add_widget(screen1)
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        scrMan.add_widget(Login(name='Login'))
-        scrMan.remove_widget(self)
-
+        self.manager.current = 'Login'
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        scrMan.add_widget(SignUp(name='SignUp'))
-        scrMan.remove_widget(self)
+        self.manager.current = 'SignUp'
 
 
 class Login(Screen):
@@ -54,12 +51,14 @@ class Login(Screen):
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .68, "center_y": .04},
                                   color=[52, 0, 231, 255])
         my_button3 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button4 = MDTextButton(font_size="12sp", pos_hint={"center_x": .5, "center_y": .28})
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
+        self.screen1.add_widget(my_button4)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -82,8 +81,7 @@ class Login(Screen):
             self.screen1.ids.password.text = ''
 
     def changer2(self, *args):
-        scrMan.add_widget(SignUp(name="SignUp"))
-        scrMan.remove_widget(self)
+        self.manager.current = 'SignUp'
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
@@ -101,12 +99,15 @@ class SignUp(Screen):
                             background_color=[0, 0, 0, 0])
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .64, "center_y": .04})
         my_button3 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button4 = MDTextButton(font_size="12sp", pos_hint={"center_x": .5, "center_y": .12})
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
+        self.screen1.add_widget(my_button4)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -141,6 +142,12 @@ class SignUp(Screen):
         scrMan.add_widget(Home(name="Home"))
         scrMan.remove_widget(self)
 
+    def changer4(self, *args):
+        self.screen1.ids.password.text=''
+        self.screen1.ids.name.text = ''
+        self.screen1.ids.second_name.text = ''
+        self.screen1.ids.phone.text = ''
+        self.screen1.ids.surname.text = ''
 
 class MainWindow(Screen):
     def __init__(self, **kwargs):
@@ -579,6 +586,9 @@ class StrangeProfile(Screen):
     def __init__(self, **kwargs):
         super(StrangeProfile, self).__init__(**kwargs)
         screen1 = Screen()
+        my_button1 = MDIconButton(icon="plus", pos_hint={"center_y": .8},
+                                  text_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
         name_profile = MDLabel(text="Имя", font_size="48", pos_hint={"center_y": .7},
                                halign="center",
                                color=[34, 34, 34, 255])
@@ -603,9 +613,35 @@ class StrangeProfile(Screen):
             ))
         scroll.ids.box.add_widget(scroll_reviews)
         screen1.add_widget(scroll)
-
+        screen1.add_widget(my_button1)
         self.add_widget(screen1)
 
+    def changer1(self, *args):
+        self.manager.current = 'comment'
+
+
+class Coment(Screen):
+    def __init__(self, **kwargs):
+        super(Coment, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("comment.kv"))
+        self.screen1 = Builder.load_file("comment.kv")
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer1)
+        my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                            background_color=[0, 0, 0, 0])
+        my_button2.bind(on_press=self.changer2)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'StrangeProfile'
+    def changer2(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'StrangeProfile'
+        print(self.screen1.ids.com.text)
 
 class Burger(Screen):
 
@@ -643,7 +679,7 @@ class Travel(Screen):
         # Make sure the height is such that there is something to scroll.
         layout.bind(minimum_height=layout.setter('height'))
         for i in range(10):
-            btn = Button(text="Ебать карточка", size_hint_y=None, height=30, color=(34, 34, 34, 255))
+            btn = Button(text="Ебать карточка", size_hint_y=None, height=50, background_color="blue")
             layout.add_widget(btn)
         a = scrollview.MDScrollView(size_hint=[1, .9], size=[Window.width, Window.height])
         a.add_widget(layout)
