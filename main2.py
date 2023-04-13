@@ -51,12 +51,14 @@ class Login(Screen):
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .68, "center_y": .04},
                                   color=[52, 0, 231, 255])
         my_button3 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button4 = MDTextButton(font_size="12sp", pos_hint={"center_x": .5, "center_y": .28})
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
-        my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
+        self.screen1.add_widget(my_button4)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -70,7 +72,9 @@ class Login(Screen):
     def changer3(self, *args):
         self.manager.transition.direction = "right"
         self.manager.current = 'Home'
-
+    def changer4(self, *args):
+        self.screen1.ids.password.text=''
+        self.screen1.ids.phone.text = ''
 
 class SignUp(Screen):
     def __init__(self, **kwargs):
@@ -82,12 +86,15 @@ class SignUp(Screen):
                             background_color=[0, 0, 0, 0])
         my_button2 = MDTextButton(font_size="11sp", pos_hint={"center_x": .64, "center_y": .04})
         my_button3 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button4 = MDTextButton(font_size="12sp", pos_hint={"center_x": .5, "center_y": .12})
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
+        my_button4.bind(on_press=self.changer4)
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
+        self.screen1.add_widget(my_button4)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -117,6 +124,12 @@ class SignUp(Screen):
         self.manager.transition.direction = "right"
         self.manager.current = 'Home'
 
+    def changer4(self, *args):
+        self.screen1.ids.password.text=''
+        self.screen1.ids.name.text = ''
+        self.screen1.ids.second_name.text = ''
+        self.screen1.ids.phone.text = ''
+        self.screen1.ids.surname.text = ''
 
 class MainWindow(Screen):
     def __init__(self, **kwargs):
@@ -627,40 +640,40 @@ class Travel(Screen):
 class MyApp(MDApp):
     def build(self):
         my_screenmanager = ScreenManager()
-        # screen1 = Home(name='Home')
-        # screen2 = Login(name='Login')
-        # screen3 = SignUp(name='SignUp')
-        # screen4 = MainWindow(name='MainWindow')
-        # screen5 = ProfileWindow(name='ProfileWindow')
-        # screen6 = Reviews(name='Reviews')
-        # screen7 = TripFrom(name='TripFrom')
-        # screen8 = TripTo(name='TripTo')
-        # screen9 = Settings(name='Settings')
-        # screen10 = DataChange(name='DataChange')
-        # screen11 = PasswordChange(name='PasswordChange')
-        # screen12 = HistoryTrip(name='HistoryTrip')
-        # screen13 = PhoneChange(name='PhoneChange')
-        # screen14 = NameChange(name='NameChange')
-        # screen15 = InputTripInformation(name='InputTripInformation')
+        screen1 = Home(name='Home')
+        screen2 = Login(name='Login')
+        screen3 = SignUp(name='SignUp')
+        screen4 = MainWindow(name='MainWindow')
+        screen5 = ProfileWindow(name='ProfileWindow')
+        screen6 = Reviews(name='Reviews')
+        screen7 = TripFrom(name='TripFrom')
+        screen8 = TripTo(name='TripTo')
+        screen9 = Settings(name='Settings')
+        screen10 = DataChange(name='DataChange')
+        screen11 = PasswordChange(name='PasswordChange')
+        screen12 = HistoryTrip(name='HistoryTrip')
+        screen13 = PhoneChange(name='PhoneChange')
+        screen14 = NameChange(name='NameChange')
+        screen15 = InputTripInformation(name='InputTripInformation')
         screen16 = StrangeProfile(name='StrangeProfile')
         screen17 = Burger(name='Burger')
         screen18 = Travel(name='Travel')
         screen19 = Coment(name='comment')
-        # my_screenmanager.add_widget(screen1)
-        # my_screenmanager.add_widget(screen2)
-        # my_screenmanager.add_widget(screen3)
-        # my_screenmanager.add_widget(screen4)
-        # my_screenmanager.add_widget(screen5)
-        # my_screenmanager.add_widget(screen6)
-        # my_screenmanager.add_widget(screen7)
-        # my_screenmanager.add_widget(screen8)
-        # my_screenmanager.add_widget(screen9)
-        # my_screenmanager.add_widget(screen10)
-        # my_screenmanager.add_widget(screen11)
-        # my_screenmanager.add_widget(screen12)
-        # my_screenmanager.add_widget(screen13)
-        # my_screenmanager.add_widget(screen14)
-        # my_screenmanager.add_widget(screen15)
+        my_screenmanager.add_widget(screen1)
+        my_screenmanager.add_widget(screen2)
+        my_screenmanager.add_widget(screen3)
+        my_screenmanager.add_widget(screen4)
+        my_screenmanager.add_widget(screen5)
+        my_screenmanager.add_widget(screen6)
+        my_screenmanager.add_widget(screen7)
+        my_screenmanager.add_widget(screen8)
+        my_screenmanager.add_widget(screen9)
+        my_screenmanager.add_widget(screen10)
+        my_screenmanager.add_widget(screen11)
+        my_screenmanager.add_widget(screen12)
+        my_screenmanager.add_widget(screen13)
+        my_screenmanager.add_widget(screen14)
+        my_screenmanager.add_widget(screen15)
         my_screenmanager.add_widget(screen16)
         my_screenmanager.add_widget(screen17)
         my_screenmanager.add_widget(screen18)
