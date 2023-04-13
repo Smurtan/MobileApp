@@ -170,20 +170,31 @@ class ActiveTrip(Screen):
     def __init__(self, **kwargs):
         super(ActiveTrip, self).__init__(**kwargs)
         self.screen1 = Screen()
-        card = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
+        self.my_button1 = MDFloatingActionButton(icon="arrow-left", elevation_normal=12,
+                                                 pos_hint={"center_x": .5, "center_y": .3},
+                                                 size_hint=(None, None), segment_panel_height="56dp",
+                                                 md_bg_color="green")
+        self.my_button1.bind(on_press=self.changer1)
+        card = scrollview.MDScrollView(
+            gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True, spacing="30dp", padding="20dp"))
         fam = 'Осокин'
         name = 'Артем'
         otch = 'Алексеевич'
-        card.ids.box.add_widget(MDLabel(text=f'Водитель: {fam} {name} {otch}'))
+        card.ids.box.add_widget(MDCard(MDLabel(text=f'Водитель: {fam} {name} {otch}')))
         card.ids.box.add_widget(MDLabel(text='Пассажиры:'))
         for i in range(4):
-            card.ids.box.add_widget(MDLabel(text=f'{fam} {name} {otch}'))
+            card.ids.box.add_widget(MDLabel(text=f'              {fam} {name} {otch}'))
         date = '24/12/2023'
         card.ids.box.add_widget(MDLabel(text=f'Дата: {date}'))
         value = '250$'
         card.ids.box.add_widget(MDLabel(text=f'Стоимость: {value}'))
         self.screen1.add_widget(card)
+        self.screen1.add_widget(self.my_button1)
         self.add_widget(self.screen1)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        self.manager.current = 'MainWindow'
 
 
 class TripFrom(Screen):
@@ -351,21 +362,27 @@ class ProfileWindow(Screen):
 class Reviews(Screen):
     def __init__(self, **kwargs):
         super(Reviews, self).__init__(**kwargs)
-        screen1 = Screen()
-        widget_grid_layout = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
+        self.screen1 = Screen()
+        self.my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        self.changer()
+
+    def changer(self, *args):
+        widget_grid_layout = scrollview.MDScrollView(
+            gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
         for i in range(10):
             widget_grid_layout.ids.box.add_widget(MDExpansionPanelThreeLine(
                 text="Text",
                 secondary_text="Secondary text",
                 tertiary_text="Tertiary text",
             ))
-        screen1.add_widget(widget_grid_layout)
-        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
-        my_button1.bind(on_press=self.changer)
-        screen1.add_widget(my_button1)
-        self.add_widget(screen1)
+        self.screen1.add_widget(widget_grid_layout)
+        # self.manager.transition.direction = "right"
+        # self.manager.current = 'ProfileWindow'
+        self.my_button1.bind(on_press=self.changer2)
+        self.screen1.add_widget(self.my_button1)
+        self.add_widget(self.screen1)
 
-    def changer(self, *args):
+    def changer2(self, *args):
         self.manager.transition.direction = "right"
         self.manager.current = 'ProfileWindow'
 
