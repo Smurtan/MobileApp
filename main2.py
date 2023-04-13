@@ -17,8 +17,8 @@ from server.client import Client
 class Home(Screen):
     def __init__(self, **kwargs):
         super(Home, self).__init__(**kwargs)
-        screen1 = Screen()
-        screen1.add_widget(Builder.load_file("home.kv"))
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("home.kv"))
         my_button1 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .19},
                             background_color=[0, 0, 0, 0])
         my_button2 = Button(size_hint=[.66, .065], pos_hint={"center_x": .5, "center_y": .09},
@@ -27,17 +27,20 @@ class Home(Screen):
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
 
-        screen1.add_widget(my_button1)
-        screen1.add_widget(my_button2)
-        self.add_widget(screen1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'Login'
+        scrMan.add_widget(Login(name='Login'))
+        scrMan.remove_widget(self)
+
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'SignUp'
+        scrMan.add_widget(SignUp(name='SignUp'))
+        scrMan.remove_widget(self)
 
 
 class Login(Screen):
@@ -64,23 +67,28 @@ class Login(Screen):
             self.screen1.ids.phone.text,
             self.screen1.ids.password.text
         )
-        self.screen1.ids.phone.text = ''
-        self.screen1.ids.password.text = ''
+        # self.screen1.ids.phone.text = ''
+        # self.screen1.ids.password.text = ''
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
 
         if user:
-            self.manager.current = 'MainWindow'
+            global USER
+            USER = user
+            scrMan.add_widget(MainWindow(name="MainWindow"))
+            scrMan.remove_widget(self)
         else:
             self.screen1.ids.phone.text = ''
             self.screen1.ids.password.text = ''
 
     def changer2(self, *args):
-        self.manager.current = 'SignUp'
+        scrMan.add_widget(SignUp(name="SignUp"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Home'
+        scrMan.add_widget(Home(name="Home"))
+        scrMan.remove_widget(self)
 
 
 class SignUp(Screen):
@@ -109,25 +117,29 @@ class SignUp(Screen):
             self.screen1.ids.password.text,
             self.screen1.ids.phone.text
         )
-        self.screen1.ids.surname.text = ''
-        self.screen1.ids.name.text = ''
-        self.screen1.ids.second_name.text = ''
-        self.screen1.ids.phone.text = ''
-        self.screen1.ids.password.text = ''
+        # self.screen1.ids.surname.text = ''
+        # self.screen1.ids.name.text = ''
+        # self.screen1.ids.second_name.text = ''
+        # self.screen1.ids.phone.text = ''
+        # self.screen1.ids.password.text = ''
         print(self.screen1.ids.surname.text)
         print(self.screen1.ids.name.text)
         print(self.screen1.ids.second_name.text)
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
+        global USER
         USER = user
-        self.manager.current = 'MainWindow'
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
-        self.manager.current = 'Login'
+        scrMan.add_widget(Login(name="Login"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Home'
+        scrMan.add_widget(Home(name="Home"))
+        scrMan.remove_widget(self)
 
 
 class MainWindow(Screen):
@@ -155,15 +167,18 @@ class MainWindow(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'ProfileWindow'
+        scrMan.add_widget(ProfileWindow(name="ProfileWindow"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'TripFrom'
+        scrMan.add_widget(TripFrom(name="TripFrom"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Burger'
+        scrMan.add_widget(Burger(name="Burger"))
+        scrMan.remove_widget(self)
 
 
 class TripFrom(Screen):
@@ -186,11 +201,13 @@ class TripFrom(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'MainWindow'
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'TripTo'
+        scrMan.add_widget(TripTo(name="TripTo"))
+        scrMan.remove_widget(self)
 
 
 class TripTo(Screen):
@@ -213,11 +230,13 @@ class TripTo(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'TripFrom'
+        scrMan.add_widget(TripFrom(name="TripFrom"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'InputTripInformation'
+        scrMan.add_widget(InputTripInformation(name="InputTripInformation"))
+        scrMan.remove_widget(self)
 
 
 class InputTripInformation(Screen):
@@ -237,11 +256,13 @@ class InputTripInformation(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'TripTo'
+        scrMan.add_widget(TripTo(name="TripTo"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text)
-        self.manager.current = 'MainWindow'
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
 
 class ProfileWindow(Screen):
@@ -280,19 +301,23 @@ class ProfileWindow(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'MainWindow'
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'Reviews'
+        scrMan.add_widget(Reviews(name="Reviews"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'HistoryTrip'
+        scrMan.add_widget(HistoryTrip(name="HistoryTrip"))
+        scrMan.remove_widget(self)
 
     def changer4(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = "Settings"
+        scrMan.add_widget(Settings(name="Settings"))
+        scrMan.remove_widget(self)
 
     def file_manager_open(self, *args):
         self.file_manager.show(os.path.expanduser("~"))  # output manager to the screen
@@ -320,13 +345,21 @@ class Reviews(Screen):
     def __init__(self, **kwargs):
         super(Reviews, self).__init__(**kwargs)
         screen1 = Screen()
+        reviews = client.watchReview(USER)
         widget_grid_layout = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
-        for i in range(10):
+        if reviews:
+            for review in reviews:
+                widget_grid_layout.ids.box.add_widget(MDExpansionPanelThreeLine(
+                    text=str(review[2]),
+                    secondary_text=str(review[1]),
+                    tertiary_text=str(review[0])
+                ))
+        else:
             widget_grid_layout.ids.box.add_widget(MDExpansionPanelThreeLine(
-                text="Text",
-                secondary_text="Secondary text",
-                tertiary_text="Tertiary text",
-            ))
+                text='Отзывов нет!',
+                secondary_text='',
+                tertiary_text='')
+            )
         screen1.add_widget(widget_grid_layout)
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         my_button1.bind(on_press=self.changer)
@@ -335,12 +368,15 @@ class Reviews(Screen):
 
     def changer(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'ProfileWindow'
+        scrMan.add_widget(ProfileWindow(name="ProfileWindow"))
+        scrMan.remove_widget(self)
 
 
 class HistoryTrip(Screen):
     def __init__(self, **kwargs):
         super(HistoryTrip, self).__init__(**kwargs)
+        trips = client.loadStoryTravel(USER)
+        print(trips)
         screen1 = Screen()
         widget_grid_layout = scrollview.MDScrollView(gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True))
         for i in range(10):
@@ -356,7 +392,8 @@ class HistoryTrip(Screen):
 
     def changer(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'ProfileWindow'
+        scrMan.add_widget(ProfileWindow(name="ProfileWindow"))
+        scrMan.remove_widget(self)
 
 
 class Settings(Screen):
@@ -388,19 +425,23 @@ class Settings(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'DataChange'
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'PasswordChange'
+        scrMan.add_widget(PasswordChange(name="PasswordChange"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Home'
+        scrMan.add_widget(Home(name="Home"))
+        scrMan.remove_widget(self)
 
     def changer4(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'ProfileWindow'
+        scrMan.add_widget(ProfileWindow(name="ProfileWindow"))
+        scrMan.remove_widget(self)
 
 
 class DataChange(Screen):
@@ -428,19 +469,23 @@ class DataChange(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'DataChange'
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'PhoneChange'
+        scrMan.add_widget(PhoneChange(name="PhoneChange"))
+        scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'NameChange'
+        scrMan.add_widget(NameChange(name="NameChange"))
+        scrMan.remove_widget(self)
 
     def changer4(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Settings'
+        scrMan.add_widget(Settings(name="Settings"))
+        scrMan.remove_widget(self)
 
 
 class PasswordChange(Screen):
@@ -462,12 +507,14 @@ class PasswordChange(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'Settings'
+        scrMan.add_widget(Settings(name="Settings"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "right"
         print(self.screen1.ids.password.text, self.screen1.ids.password.text, self.screen1.ids.password.text)
-        self.manager.current = 'Settings'
+        scrMan.add_widget(Settings(name="Settings"))
+        scrMan.remove_widget(self)
 
 
 class PhoneChange(Screen):
@@ -489,12 +536,14 @@ class PhoneChange(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'DataChange'
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "right"
         print(self.screen1.ids.phone.text)
-        self.manager.current = 'DataChange'
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
 
 class NameChange(Screen):
@@ -516,12 +565,14 @@ class NameChange(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
-        self.manager.current = 'DataChange'
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         self.manager.transition.direction = "right"
-        print(self.screen1.ids.fam.text, self.screen1.ids.name.text, self.screen1.ids.otch.text, )
-        self.manager.current = 'DataChange'
+        print(self.screen1.ids.fam.text, self.screen1.ids.name.text, self.screen1.ids.otch.text)
+        scrMan.add_widget(DataChange(name="DataChange"))
+        scrMan.remove_widget(self)
 
 
 class StrangeProfile(Screen):
@@ -576,11 +627,13 @@ class Burger(Screen):
 
     def changer1(self, *args):
         self.manager.transition.direction = "left"
-        self.manager.current = 'MainWindow'
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
     def changer2(self, *args):
         print(self.screen1.ids.from_.text, self.screen1.ids.to_.text, self.screen1.ids.date.text)
-        self.manager.current = 'Travel'
+        scrMan.add_widget(Travel(name="Travel"))
+        scrMan.remove_widget(self)
 
 class Travel(Screen):
     def __init__(self, **kwargs):
@@ -601,53 +654,59 @@ class Travel(Screen):
         self.add_widget(screen1)
 
     def changer(self, *args):
-        self.manager.current = 'Burger'
+        scrMan.add_widget(Burger(name="Burger"))
+        scrMan.remove_widget(self)
 
-client = Client('192.168.0.84', 8080)
+client = Client('192.168.0.84', 8888)
 client.connect()
 
 USER = None
 
+scrMan = None
+
 class MyApp(MDApp):
     def build(self):
-        my_screenmanager = ScreenManager()
-        screen1 = Home(name='Home')
-        screen2 = Login(name='Login')
-        screen3 = SignUp(name='SignUp')
-        screen4 = MainWindow(name='MainWindow')
-        screen5 = ProfileWindow(name='ProfileWindow')
-        screen6 = Reviews(name='Reviews')
-        screen7 = TripFrom(name='TripFrom')
-        screen8 = TripTo(name='TripTo')
-        screen9 = Settings(name='Settings')
-        screen10 = DataChange(name='DataChange')
-        screen11 = PasswordChange(name='PasswordChange')
-        screen12 = HistoryTrip(name='HistoryTrip')
-        screen13 = PhoneChange(name='PhoneChange')
-        screen14 = NameChange(name='NameChange')
-        screen15 = InputTripInformation(name='InputTripInformation')
-        screen16 = StrangeProfile(name='StrangeProfile')
-        screen17 = Burger(name='Burger')
-        screen18 = Travel(name='Travel')
-        my_screenmanager.add_widget(screen1)
-        my_screenmanager.add_widget(screen2)
-        my_screenmanager.add_widget(screen3)
-        my_screenmanager.add_widget(screen4)
-        my_screenmanager.add_widget(screen5)
-        my_screenmanager.add_widget(screen6)
-        my_screenmanager.add_widget(screen7)
-        my_screenmanager.add_widget(screen8)
-        my_screenmanager.add_widget(screen9)
-        my_screenmanager.add_widget(screen10)
-        my_screenmanager.add_widget(screen11)
-        my_screenmanager.add_widget(screen12)
-        my_screenmanager.add_widget(screen13)
-        my_screenmanager.add_widget(screen14)
-        my_screenmanager.add_widget(screen15)
-        my_screenmanager.add_widget(screen16)
-        my_screenmanager.add_widget(screen17)
-        my_screenmanager.add_widget(screen18)
-        return my_screenmanager
+        self.my_screenmanager = ScreenManager()
+        self.screen1 = Home(name='Home')
+        # screen2 = Login(name='Login')
+        # screen3 = SignUp(name='SignUp')
+        # screen4 = MainWindow(name='MainWindow')
+        # screen5 = ProfileWindow(name='ProfileWindow')
+        # screen6 = Reviews(name='Reviews')
+        # screen7 = TripFrom(name='TripFrom')
+        # screen8 = TripTo(name='TripTo')
+        # screen9 = Settings(name='Settings')
+        # screen10 = DataChange(name='DataChange')
+        # screen11 = PasswordChange(name='PasswordChange')
+        # screen12 = HistoryTrip(name='HistoryTrip')
+        # screen13 = PhoneChange(name='PhoneChange')
+        # screen14 = NameChange(name='NameChange')
+        # screen15 = InputTripInformation(name='InputTripInformation')
+        # screen16 = StrangeProfile(name='StrangeProfile')
+        # screen17 = Burger(name='Burger')
+        # screen18 = Travel(name='Travel')
+        self.my_screenmanager.add_widget(self.screen1)
+        # self.my_screenmanager.add_widget(screen2)
+        # self.my_screenmanager.add_widget(screen3)
+        # self.my_screenmanager.add_widget(screen4)
+        # self.my_screenmanager.add_widget(screen5)
+        # self.my_screenmanager.add_widget(screen6)
+        # self.my_screenmanager.add_widget(screen7)
+        # self.my_screenmanager.add_widget(screen8)
+        # self.my_screenmanager.add_widget(screen9)
+        # self.my_screenmanager.add_widget(screen10)
+        # self.my_screenmanager.add_widget(screen11)
+        # self.my_screenmanager.add_widget(screen12)
+        # self.my_screenmanager.add_widget(screen13)
+        # self.my_screenmanager.add_widget(screen14)
+        # self.my_screenmanager.add_widget(screen15)
+        # self.my_screenmanager.add_widget(screen16)
+        # self.my_screenmanager.add_widget(screen17)
+        # self.my_screenmanager.add_widget(screen18)
+
+        global scrMan
+        scrMan = self.my_screenmanager
+        return self.my_screenmanager
 
 
 MyApp().run()

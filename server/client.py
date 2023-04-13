@@ -136,7 +136,7 @@ class Client:
             print('Произошло неизведанное')
             return False
 
-    def loadReview(self, From, To, date):
+    def loadFellow(self, From, To, date):
         self.sender('load_fellow', {
             'From': From,
             'To': To,
