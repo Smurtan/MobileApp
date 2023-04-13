@@ -1,10 +1,11 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivymd.uix.button import MDFloatingActionButton, MDIconButton, MDTextButton
+from kivymd.uix.button import MDFloatingActionButton, MDIconButton, MDTextButton, MDFlatButton
 from kivymd.uix.expansionpanel import MDExpansionPanelThreeLine, MDExpansionPanelTwoLine
 from kivymd.uix import scrollview
 from kivymd.uix import gridlayout
+from kivymd.uix.dialog import MDDialog
 from kivy.uix.button import Button
 from kivymd.uix.label import MDLabel
 import os
@@ -62,6 +63,15 @@ class Login(Screen):
         self.screen1.add_widget(my_button3)
         self.add_widget(self.screen1)
 
+    def dialog(self):
+        close_btn= MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Пароль не верный',
+                          text='Попробуйте снова',
+                          size_hint=(0.5, 1),
+                          buttons=[close_btn])
+        self.dialogscr.open()
+    def close_dialog(self):
+        self.dialog.dismiss()
     def changer1(self, *args):
         user = client.login(
             self.screen1.ids.phone.text,
@@ -72,12 +82,14 @@ class Login(Screen):
         print(self.screen1.ids.phone.text)
         print(self.screen1.ids.password.text)
 
+
         if user:
             global USER
             USER = user
             scrMan.add_widget(MainWindow(name="MainWindow"))
             scrMan.remove_widget(self)
         else:
+            self.dialog()
             self.screen1.ids.phone.text = ''
             self.screen1.ids.password.text = ''
 
