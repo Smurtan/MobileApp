@@ -1,4 +1,7 @@
 import requests
+from kivy.properties import ListProperty
+from kivy.uix.widget import Widget
+from kivy_garden.mapview import MapView, MapSource, MapMarkerPopup
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -13,6 +16,8 @@ import os
 from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
+
+from geopy.geocoders import Nominatim
 
 from server.client import Client
 
@@ -233,8 +238,13 @@ class MainWindow(Screen):
 
     def changer2(self, *args):
         self.manager.transition.direction = "left"
-        scrMan.add_widget(TripFrom(name="TripFrom"))
-        scrMan.remove_widget(self)
+        global CONDITION
+        if CONDITION == 'vod':
+            scrMan.add_widget(TripFrom(name="TripFrom"))
+            scrMan.remove_widget(self)
+        else:
+            scrMan.add_widget(TripFromPas(name="TripFromPas"))
+            scrMan.remove_widget(self)
 
     def changer3(self, *args):
         self.manager.transition.direction = "right"
@@ -262,19 +272,61 @@ class TripFrom(Screen):
     def __init__(self, **kwargs):
         super(TripFrom, self).__init__(**kwargs)
         self.screen1 = Screen()
+
+        # self.map = MapView(map_source=MapSource(url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"), lat=58.08,
+        #                    lon=38.8,
+        #                    zoom=10)
+        # self.screen1.add_widget(self.map)
+        # c = self.screen1.on_touch_up
+
         self.screen1.add_widget(Builder.load_file("add_trip.kv"))
         self.screen1 = Builder.load_file("add_trip.kv")
-        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        self.my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
                                  background_color=[0, 0, 0, 0])
-        my_button1.bind(on_press=self.changer1)
-        self.screen1.add_widget(my_button1)
+        self.my_button1.bind(on_press=self.changer1)
+        self.screen1.add_widget(self.my_button1)
         self.screen1.add_widget(self.my_button2)
-        self.a = MDLabel(text="Где собираемся?", font_size="20", pos_hint={"center_y": .97}, halign="center",
+        self.m = MDLabel(text="Где собираемся?", font_size="20", pos_hint={"center_y": .97}, halign="center",
                          color=[34, 34, 34, 255])
-        self.screen1.add_widget(self.a)
+        self.screen1.add_widget(self.m)
         self.add_widget(self.screen1)
         self.my_button2.bind(on_press=self.changer2)
+
+
+        self.f = False
+
+    # def get_addres(self, coors):
+    #     return Nominatim(user_agent="my_application").reverse(coors).address.split(',')[1]
+
+    # def on_touch_up(self, touch):
+    #     print(touch.pos, touch.spos)
+    #
+    #     print(self.map.get_latlon_at(touch.spos[0], touch.spos[1])[0],
+    #           self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1])
+    #     if not self.f:
+    #         self.a = MapMarkerPopup(lat=self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
+    #                            lon=self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1], popup_size=[230, 130])
+    #
+    #         self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
+    #                                                       self.map.get_latlon_at(touch.pos[0], touch.spos[1])[
+    #                                                           1]))
+    #
+    #         self.screen1.add_widget(self.a)
+    #         self.f = True
+    #     else:
+    #         self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
+    #                                                           self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]))
+    #         self.screen1.remove_widget(self.a)
+    #         self.a.lat = self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0]
+    #         self.a.lon = self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]
+    #         self.screen1.add_widget(self.a)
+
+            # self.screen1.remove_widget(self.my_button1)
+            # self.screen1.remove_widget(self.my_button2)
+            # self.screen1.add_widget(self.my_button1)
+            # self.screen1.add_widget(self.my_button2)
+            #self.add_widget(self.screen1)
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
@@ -331,6 +383,8 @@ class TripTo(Screen):
 
 class InputTripInformation(Screen):
     def __init__(self, From, To, **kwargs):
+        self.From = From
+        self.To = To
         super(InputTripInformation, self).__init__(**kwargs)
         self.screen1 = Screen()
         self.screen1.add_widget(Builder.load_file("inf_trip.kv"))
@@ -344,13 +398,168 @@ class InputTripInformation(Screen):
         self.screen1.add_widget(my_button2)
         self.add_widget(self.screen1)
 
+        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text,
+              self.screen1.ids.prise.text)
+
+    def create_dialog(self):
+        close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Ура!',
+                                  text='Поездка успешно добавлена.',
+                                  size_hint=(0.5, 1),
+                                  buttons=[close_btn])
+        self.dialogscr.open()
+
+    def close_dialog(self, *args):
+        self.dialogscr.dismiss()
+
     def changer1(self, *args):
         self.manager.transition.direction = "right"
         scrMan.add_widget(TripTo(name="TripTo"))
         scrMan.remove_widget(self)
 
     def changer2(self, *args):
-        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text)
+        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text,
+              self.screen1.ids.prise.text)
+        data = client.addTravel(USER, self.From, self.To, self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.prise.text, self.screen1.ids.number.text)
+
+
+        if data:
+            fellows = client.loadFellow(self.From, self.To, self.screen1.ids.date.text)
+
+            # if fellows[0]:
+            #     scrMan.add_widget(FellowWindow(fellows, name="FellowWindow"))
+            #     scrMan.remove_widget(self)
+            # else:
+            self.create_dialog()
+
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
+
+
+class FellowWindow(Screen):
+    pass
+# СЕРЁГА
+
+
+class TripFromPas(Screen):
+    def __init__(self, **kwargs):
+        super(TripFromPas, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Builder.load_file("add_trip.kv")
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                                 background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(self.my_button2)
+        self.a = MDLabel(text="Откуда держим путь?", font_size="20", pos_hint={"center_y": .97}, halign="center",
+                         color=[34, 34, 34, 255])
+        self.screen1.add_widget(self.a)
+        self.add_widget(self.screen1)
+        self.my_button2.bind(on_press=self.changer2)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
+
+    def changer2(self, *args):
+        self.manager.transition.direction = "left"
+
+        try:
+            from_coordinates = Coordinaty(self.screen1.ids.city.text)
+            print(from_coordinates.get_coordinates())
+            scrMan.add_widget(TripToPas(from_coordinates.get_coordinates(), name="TripToPas"))
+            scrMan.remove_widget(self)
+        except IndexError as e:
+            pass
+
+
+class TripToPas(Screen):
+    def __init__(self, From, **kwargs):
+        self.From = From
+        super(TripToPas, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("add_trip.kv"))
+        self.screen1 = Builder.load_file("add_trip.kv")
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        self.my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                                 background_color=[0, 0, 0, 0])
+        my_button1.bind(on_press=self.changer1)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(self.my_button2)
+        self.a = MDLabel(text="Куда едем?", font_size="20", pos_hint={"center_y": .97}, halign="center",
+                         color=[34, 34, 34, 255])
+        self.screen1.add_widget(self.a)
+        self.add_widget(self.screen1)
+        self.my_button2.bind(on_press=self.changer2)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        scrMan.add_widget(TripFromPas(name="TripFromPas"))
+        scrMan.remove_widget(self)
+
+    def changer2(self, *args):
+        self.manager.transition.direction = "left"
+
+        try:
+            from_coordinates = Coordinaty(self.screen1.ids.city.text)
+            print(from_coordinates.get_coordinates())
+            scrMan.add_widget(InputTripInformationPas(self.From, from_coordinates.get_coordinates(), name="InputTripInformationPas"))
+            scrMan.remove_widget(self)
+        except(IndexError) as e:
+            pass
+
+
+class InputTripInformationPas(Screen):
+    def __init__(self, From, To, **kwargs):
+        self.From = From
+        self.To = To
+        super(InputTripInformationPas, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.screen1.add_widget(Builder.load_file("inf_trip_pas.kv"))
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
+        my_button1.bind(on_press=self.changer1)
+        my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
+                            background_color=[0, 0, 0, 0])
+        my_button2.bind(on_press=self.changer2)
+        self.screen1.add_widget(my_button1)
+        self.screen1.add_widget(my_button2)
+        self.add_widget(self.screen1)
+
+    def create_suc_dialog(self):
+        close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Ура!',
+                                  text='Запрос на поездку создан.',
+                                  size_hint=(0.5, 1),
+                                  buttons=[close_btn])
+        self.dialogscr.open()
+
+    def create_unsuc_dialog(self):
+        close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Неудача',
+                                  text='Запрос был создан не верно.',
+                                  size_hint=(0.5, 1),
+                                  buttons=[close_btn])
+        self.dialogscr.open()
+
+    def close_dialog(self, *args):
+        self.dialogscr.dismiss()
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        scrMan.add_widget(TripToPas(name="TripToPas"))
+        scrMan.remove_widget(self)
+
+    def changer2(self, *args):
+        global USER
+        data = client.addRequest(USER, self.From, self.To, self.screen1.ids.date.text)
+        if data:
+            self.create_suc_dialog()
+        else:
+            self.create_unsuc_dialog()
+
         scrMan.add_widget(MainWindow(name="MainWindow"))
         scrMan.remove_widget(self)
 
@@ -799,12 +1008,19 @@ class Travel(Screen):
         travels = client.loadTravels(self.From, self.To, self.date)
         print(travels) # [[4, 400, '8:30:00', 'Artem']]
         screen1 = Screen()
-        layout = gridlayout.MDGridLayout(cols=1, spacing=10, size_hint_y=None)
+        layout = gridlayout.MDGridLayout(cols=1, padding=20, spacing=10, size_hint_y=None)
         # Make sure the height is such that there is something to scroll.
+        self.buttons = []
+        if travels:
+            for trip in travels:
+                layout.add_widget(Widget())
+                btn = Button(text=f'{trip[3]}        {trip[2]}         {trip[1]}₽', size_hint_y=None, width=200, height=50, background_color="blue")
+
+                btn.bind(on_press=lambda *args: self.changer1(trip[0], trip[3], trip[2], trip[1], trip[4]))
+                self.buttons.append(btn)
+                layout.add_widget(btn)
+                layout.add_widget(Widget())
         layout.bind(minimum_height=layout.setter('height'))
-        for trip in travels:
-            btn = Button(text="Ебать карточка", size_hint_y=None, height=50, background_color="blue")
-            layout.add_widget(btn)
         a = scrollview.MDScrollView(size_hint=[1, .9], size=[Window.width, Window.height])
         a.add_widget(layout)
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
@@ -816,6 +1032,82 @@ class Travel(Screen):
     def changer(self, *args):
         scrMan.add_widget(Burger(name="Burger"))
         scrMan.remove_widget(self)
+
+    def changer1(self, *args):
+        print(args[0])
+        scrMan.add_widget(Bron(args[0], self.From, self.To, args[1], self.date, args[2], args[3], args[4],  name="Bron"))
+        scrMan.remove_widget(self)
+
+class Bron(Screen):
+    def __init__(self, travel, From, To, driver, date, time, prise, num_pas, **kwargs):
+        super(Bron, self).__init__(**kwargs)
+        self.travel = travel
+        screen1 = Screen()
+        my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, font_size="30sp")
+        my_button2 = Button(text= "Забронировать", font_size="16sp", size_hint=( .35, .075), pos_hint={"center_x": .8,"center_y": .1})
+        text_from = MDLabel(text=f"Откуда: {From}", font_size="48", pos_hint={"left_x": .1, "center_y": .85},
+        halign="center", color=[34, 34, 34, 255])
+        text_to = MDLabel(text=f"Куда: {To}", font_size="48", pos_hint={"left_x": .1, "center_y": .8},
+        halign="center", color=[34, 34, 34, 255])
+        text_driver = MDLabel(text=f"Водитель: {driver}", font_size="48", pos_hint={"left_x": .1, "center_y": .75},
+                          halign="center", color=[34, 34, 34, 255])
+        text_date = MDLabel(text=f"Дата: {date}", font_size="48", pos_hint={"left_x": .1, "center_y": .7},
+                          halign="center", color=[34, 34, 34, 255])
+        text_time = MDLabel(text=f"Время: {time}", font_size="48", pos_hint={"left_x": .1, "center_y": .65},
+                            halign="center", color=[34, 34, 34, 255])
+        text_price = MDLabel(text=f"Цена: {prise}", font_size="48", pos_hint={"left_x": .1, "center_y": .6}, halign="center", color=[34, 34, 34, 255])
+        name_pass = MDLabel(text=f"Количество пассажиров: {num_pas}", font_size="48", pos_hint={"left_x": .1, "center_y": .55},
+        halign="center", color=[34, 34, 34, 255])
+
+
+        my_button1.bind(on_press=self.changer1)
+        my_button2.bind(on_press=self.changer2)
+        screen1.add_widget(my_button1)
+        screen1.add_widget(my_button2)
+        screen1.add_widget(text_from)
+        screen1.add_widget(text_to)
+        screen1.add_widget(text_driver)
+        screen1.add_widget(text_date)
+        screen1.add_widget(text_time)
+        screen1.add_widget(text_price)
+        screen1.add_widget(name_pass)
+        self.add_widget(screen1)
+
+    def create_suc_dialog(self):
+        close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Ура!',
+                                  text='Поездка забронирована.',
+                                  size_hint=(0.5, 1),
+                                  buttons=[close_btn])
+        self.dialogscr.open()
+
+    def create_unsuc_dialog(self):
+        close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
+        self.dialogscr = MDDialog(title='Неудача',
+                                  text='К сожалению, бронирование не удалось.',
+                                  size_hint=(0.5, 1),
+                                  buttons=[close_btn])
+        self.dialogscr.open()
+
+    def close_dialog(self, *args):
+        self.dialogscr.dismiss()
+
+    def changer1(self, *args):
+        scrMan.add_widget(Burger(name="Burger"))
+        scrMan.remove_widget(self)
+
+    def changer2(self, *args):
+        print(1)
+        global USER
+        print(self.travel)
+        data = client.addPassager(USER, self.travel)
+        if data:
+            self.create_suc_dialog()
+        else:
+            self.create_unsuc_dialog()
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
+
 
 
 client = Client('192.168.0.84', 8888)
@@ -831,41 +1123,7 @@ class MyApp(MDApp):
     def build(self):
         self.my_screenmanager = ScreenManager()
         self.screen1 = Home(name='Home')
-        # screen2 = Login(name='Login')
-        # screen3 = SignUp(name='SignUp')
-        # screen4 = MainWindow(name='MainWindow')
-        # screen5 = ProfileWindow(name='ProfileWindow')
-        # screen6 = Reviews(name='Reviews')
-        # screen7 = TripFrom(name='TripFrom')
-        # screen8 = TripTo(name='TripTo')
-        # screen9 = Settings(name='Settings')
-        # screen10 = DataChange(name='DataChange')
-        # screen11 = PasswordChange(name='PasswordChange')
-        # screen12 = HistoryTrip(name='HistoryTrip')
-        # screen13 = PhoneChange(name='PhoneChange')
-        # screen14 = NameChange(name='NameChange')
-        # screen15 = InputTripInformation(name='InputTripInformation')
-        # screen16 = StrangeProfile(name='StrangeProfile')
-        # screen17 = Burger(name='Burger')
-        # screen18 = Travel(name='Travel')
         self.my_screenmanager.add_widget(self.screen1)
-        # self.my_screenmanager.add_widget(screen2)
-        # self.my_screenmanager.add_widget(screen3)
-        # self.my_screenmanager.add_widget(screen4)
-        # self.my_screenmanager.add_widget(screen5)
-        # self.my_screenmanager.add_widget(screen6)
-        # self.my_screenmanager.add_widget(screen7)
-        # self.my_screenmanager.add_widget(screen8)
-        # self.my_screenmanager.add_widget(screen9)
-        # self.my_screenmanager.add_widget(screen10)
-        # self.my_screenmanager.add_widget(screen11)
-        # self.my_screenmanager.add_widget(screen12)
-        # self.my_screenmanager.add_widget(screen13)
-        # self.my_screenmanager.add_widget(screen14)
-        # self.my_screenmanager.add_widget(screen15)
-        # self.my_screenmanager.add_widget(screen16)
-        # self.my_screenmanager.add_widget(screen17)
-        # self.my_screenmanager.add_widget(screen18)
 
         global scrMan
         scrMan = self.my_screenmanager

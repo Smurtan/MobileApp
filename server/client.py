@@ -131,7 +131,7 @@ class Client:
         print(data)
         if data['answer']:
             print('Поездка добавлена ', data['answer'])
-            return True
+            return data['answer']
         else:
             print('Произошло неизведанное')
             return False
