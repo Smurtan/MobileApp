@@ -118,6 +118,12 @@ MDScreen:
 	        size_hint_y: .03
 	        md_bg_color: rgba(178, 178, 178, 255)
 
+    MDTextButton:
+        text: "Отчистить"
+        pos_hint: {"center_x": .5, "center_y": .12}
+        color: rgba(68, 78, 132, 255)
+        font_size: "12sp"
+
     Button:
         text: "Зарегистрироваться"
         size_hint: .66, .065
@@ -126,7 +132,7 @@ MDScreen:
         #font_name: "BPoppins"
         canvas.before:
             Color:
-                rgb: rgba(52, 0, 231, 255)
+                rgb: rgba(27, 151, 243, 255)
             RoundedRectangle:
                 size: self.size
                 pos: self.pos
@@ -140,4 +146,4 @@ MDScreen:
         text: "Войти"
 	    font_size: "11sp"
 	    pos_hint: {"center_x": .64, "center_y": .04}
-	    color: rgba(52, 0, 231, 255)
+	    color: rgba(27, 151, 243, 255)
