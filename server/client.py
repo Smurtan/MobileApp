@@ -117,6 +117,8 @@ class Client:
             return False
 
     def addTravel(self, user, From, To, date, time, prise, count_pas):
+        date = date.split('/')
+        date = date[2] + '-' + date[1] + '-' + date[0]
         self.sender('add_travel', {
             'user': user,
             'From': From,
@@ -153,6 +155,8 @@ class Client:
             return False
 
     def addRequest(self, user, From, To, date):
+        date = date.split('/')
+        date = date[2] + '-' + date[1] + '-' + date[0]
         self.sender('add_request', {
             'user': user,
             'From': From,

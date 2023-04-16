@@ -273,12 +273,6 @@ class TripFrom(Screen):
         super(TripFrom, self).__init__(**kwargs)
         self.screen1 = Screen()
 
-        # self.map = MapView(map_source=MapSource(url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"), lat=58.08,
-        #                    lon=38.8,
-        #                    zoom=10)
-        # self.screen1.add_widget(self.map)
-        # c = self.screen1.on_touch_up
-
         self.screen1.add_widget(Builder.load_file("add_trip.kv"))
         self.screen1 = Builder.load_file("add_trip.kv")
         self.my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
@@ -293,40 +287,27 @@ class TripFrom(Screen):
         self.add_widget(self.screen1)
         self.my_button2.bind(on_press=self.changer2)
 
+        self.map = self.screen1.ids.map
 
-        self.f = False
+        self.marker = MapMarkerPopup(lat=self.map.get_latlon_at(self.screen1.center[0], self.screen1.center[1])[0],
+                                     lon=self.map.get_latlon_at(self.screen1.center[0], self.screen1.center[1])[1], popup_size=[230, 130])
+        self.screen1.ids.map.add_widget(self.marker)
 
-    # def get_addres(self, coors):
-    #     return Nominatim(user_agent="my_application").reverse(coors).address.split(',')[1]
+    def get_addres(self, coors):
+        print(Nominatim(user_agent="my_application").reverse(coors).address.split(','))
+        return Nominatim(user_agent="my_application").reverse(coors).address.split(',')[1]
 
-    # def on_touch_up(self, touch):
-    #     print(touch.pos, touch.spos)
-    #
-    #     print(self.map.get_latlon_at(touch.spos[0], touch.spos[1])[0],
-    #           self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1])
-    #     if not self.f:
-    #         self.a = MapMarkerPopup(lat=self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
-    #                            lon=self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1], popup_size=[230, 130])
-    #
-    #         self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
-    #                                                       self.map.get_latlon_at(touch.pos[0], touch.spos[1])[
-    #                                                           1]))
-    #
-    #         self.screen1.add_widget(self.a)
-    #         self.f = True
-    #     else:
-    #         self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
-    #                                                           self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]))
-    #         self.screen1.remove_widget(self.a)
-    #         self.a.lat = self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0]
-    #         self.a.lon = self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]
-    #         self.screen1.add_widget(self.a)
+    def on_touch_up(self, touch):
+        print(touch.pos, touch.spos)
 
-            # self.screen1.remove_widget(self.my_button1)
-            # self.screen1.remove_widget(self.my_button2)
-            # self.screen1.add_widget(self.my_button1)
-            # self.screen1.add_widget(self.my_button2)
-            #self.add_widget(self.screen1)
+        print(self.map.get_latlon_at(touch.spos[0], touch.spos[1])[0],
+              self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1])
+
+        self.marker.lat = self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0]
+        self.marker.lon = self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]
+
+        self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
+                                                      self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]))
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
@@ -363,6 +344,24 @@ class TripTo(Screen):
         self.screen1.add_widget(self.a)
         self.add_widget(self.screen1)
         self.my_button2.bind(on_press=self.changer2)
+        
+        self.map = self.screen1.ids.map
+
+        self.marker = MapMarkerPopup(lat=self.map.get_latlon_at(self.screen1.center[0], self.screen1.center[1])[0],
+                                     lon=self.map.get_latlon_at(self.screen1.center[0], self.screen1.center[1])[1],
+                                     popup_size=[230, 130])
+        self.screen1.ids.map.add_widget(self.marker)
+
+    def get_addres(self, coors):
+        return Nominatim(user_agent="my_application").reverse(coors).address.split(',')[1]
+
+    def on_touch_up(self, touch):
+
+        self.marker.lat = self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0]
+        self.marker.lon = self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]
+
+        self.screen1.ids.city.text = self.get_addres((self.map.get_latlon_at(touch.pos[0], touch.pos[1])[0],
+                                                      self.map.get_latlon_at(touch.pos[0], touch.spos[1])[1]))
 
     def changer1(self, *args):
         self.manager.transition.direction = "right"
@@ -398,9 +397,6 @@ class InputTripInformation(Screen):
         self.screen1.add_widget(my_button2)
         self.add_widget(self.screen1)
 
-        print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text,
-              self.screen1.ids.prise.text)
-
     def create_dialog(self):
         close_btn = MDFlatButton(text="Закрыть", on_release=self.close_dialog)
         self.dialogscr = MDDialog(title='Ура!',
@@ -419,8 +415,8 @@ class InputTripInformation(Screen):
 
     def changer2(self, *args):
         print(self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.number.text,
-              self.screen1.ids.prise.text)
-        data = client.addTravel(USER, self.From, self.To, self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.prise.text, self.screen1.ids.number.text)
+              self.screen1.ids.price.text)
+        data = client.addTravel(USER, self.From, self.To, self.screen1.ids.date.text, self.screen1.ids.time.text, self.screen1.ids.price.text, self.screen1.ids.number.text)
 
 
         if data:
@@ -519,6 +515,7 @@ class InputTripInformationPas(Screen):
         super(InputTripInformationPas, self).__init__(**kwargs)
         self.screen1 = Screen()
         self.screen1.add_widget(Builder.load_file("inf_trip_pas.kv"))
+        self.screen1 = Builder.load_file("inf_trip_pas.kv")
         my_button1 = MDIconButton(icon="arrow-left", pos_hint={"center_y": .95}, user_font_size="30sp")
         my_button1.bind(on_press=self.changer1)
         my_button2 = Button(font_size="20sp", size_hint=[.3, .05], pos_hint={"center_x": .8, "center_y": .1},
