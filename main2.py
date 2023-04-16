@@ -16,7 +16,7 @@ import os
 from kivymd.uix.filemanager import MDFileManager
 from kivy.core.window import Window
 from kivymd.toast import toast
-
+from kivymd.uix.card import MDCard
 from geopy.geocoders import Nominatim
 
 from server.client import Client
@@ -217,18 +217,22 @@ class MainWindow(Screen):
                 size_hint=[.3, .055],
                 md_bg_color="white",
                 pos_hint={"center_x": .75, "center_y": .1})
-
+        my_button6 = MDFloatingActionButton(icon="alarm-check", elevation_normal=12,
+                                            pos_hint={"center_x": .9, "center_y": .80},
+                                            size_hint=(None, None), segment_panel_height="56dp", md_bg_color="green")
         my_button1.bind(on_press=self.changer1)
         my_button2.bind(on_press=self.changer2)
         my_button3.bind(on_press=self.changer3)
         self.my_button4.bind(on_press=self.changer4)
         self.my_button5.bind(on_press=self.changer5)
+        my_button6.bind(on_press=self.changer6)
 
         self.screen1.add_widget(my_button1)
         self.screen1.add_widget(my_button2)
         self.screen1.add_widget(my_button3)
         self.screen1.add_widget(self.my_button4)
         self.screen1.add_widget(self.my_button5)
+        self.screen1.add_widget(my_button6)
         self.add_widget(self.screen1)
 
     def changer1(self, *args):
@@ -266,6 +270,11 @@ class MainWindow(Screen):
         self.my_button4.md_bg_color = 'white'
         self.my_button4.text_color = 'blue'
         CONDITION = 'pas'
+
+    def changer6(self, *args):
+        self.manager.transition.direction = "left"
+        scrMan.add_widget(ActiveTrip(name="ActiveTrip"))
+        scrMan.remove_widget(self)
 
 
 class TripFrom(Screen):
@@ -1105,9 +1114,41 @@ class Bron(Screen):
         scrMan.add_widget(MainWindow(name="MainWindow"))
         scrMan.remove_widget(self)
 
+class ActiveTrip(Screen):
+    def __init__(self, **kwargs):
+        super(ActiveTrip, self).__init__(**kwargs)
+        self.screen1 = Screen()
+        self.my_button1 = MDFloatingActionButton(icon="arrow-left", elevation_normal=12,
+                                                 pos_hint={"center_x": .5, "center_y": .3},
+                                                 size_hint=(None, None), segment_panel_height="56dp",
+                                                 md_bg_color="green")
+        self.my_button1.bind(on_press=self.changer1)
+        card = scrollview.MDScrollView(
+            gridlayout.MDGridLayout(id="box", cols=1, adaptive_height=True, spacing="30dp", padding="20dp"))
+        fam = 'Осокин'
+        name = 'Артем'
+        otch = 'Алексеевич'
+        card.ids.box.add_widget(MDCard(MDLabel(text="Активная поездка")))
+        card.ids.box.add_widget(MDCard(MDLabel(text=f'Водитель: {fam} {name} {otch}')))
+
+        card.ids.box.add_widget(MDLabel(text='Пассажиры:'))
+        for i in range(4):
+            card.ids.box.add_widget(MDLabel(text=f'              {fam} {name} {otch}'))
+        date = '24/12/2023'
+        card.ids.box.add_widget(MDLabel(text=f'Дата: {date}'))
+        value = '250$'
+        card.ids.box.add_widget(MDLabel(text=f'Стоимость: {value}'))
+        self.screen1.add_widget(card)
+        self.screen1.add_widget(self.my_button1)
+        self.add_widget(self.screen1)
+
+    def changer1(self, *args):
+        self.manager.transition.direction = "right"
+        scrMan.add_widget(MainWindow(name="MainWindow"))
+        scrMan.remove_widget(self)
 
 
-client = Client('192.168.0.84', 8888)
+client = Client('172.17.64.1', 3306)
 client.connect()
 
 USER = None
