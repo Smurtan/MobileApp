@@ -1148,7 +1148,7 @@ class ActiveTrip(Screen):
         scrMan.remove_widget(self)
 
 
-client = Client('172.17.64.1', 3306)
+client = Client('192.168.0.84', 8888)
 client.connect()
 
 USER = None
